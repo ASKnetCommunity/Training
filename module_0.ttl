@@ -1,0 +1,32 @@
+@prefix ask: <http://myontology.com/> .
+@prefix aska: <http://myontology.com/authors/> .
+@prefix askm: <http://myontology.com/modules/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix spdx: <http://spdx.org/rdf/terms#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+askm:MyBigFatTrainingModule a ask:Module ;
+    rdfs:label "MyBigFatTrainingModule"^^xsd:string ;
+    ask:blog "https://url-to-blog-posts"^^schema:URL ;
+    ask:compatibility "ASKotec2.0 or newer"^^xsd:string ;
+    ask:issues "https://url-to-issue-list"^^schema:URL ;
+    ask:license ask:CC-BY-SA-4_0 ;
+    ask:manual "Manual.md"^^xsd:string ;
+    ask:maxParticipants "10"^^xsd:int ;
+    ask:newIssue "https://url-to-new-issue"^^schema:URL ;
+    ask:release "v.1.0"^^xsd:string ;
+    schema:author aska:Name_of_the_author ;
+    schema:duration "01:30"^^schema:Duration .
+
+ask:CC-BY-SA-4_0 a ask:License ;
+    rdfs:label "CC-BY-SA-4.0"^^xsd:string ;
+    schema:file "LICENSE.md"^^xsd:string ;
+    spdx:licenseDeclared spdx:CC-BY-SA-4.0 .
+
+aska:Name_of_the_author a schema:Person ;
+    schema:email "rwewer@bla.com"^^xsd:string ;
+    schema:github "werwe"^^schema:URL ;
+    schema:name "Name of the author"^^xsd:string ;
+    schema:telegram "rwrrrtwwe"^^xsd:string .
+

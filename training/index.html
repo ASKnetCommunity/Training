@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>#ASKtraining</title>
+    <link rel="stylesheet" href="../assets/css/style.min.css">
+    <link rel="stylesheet" type="text/css" media="print" href="../assets/css/print.min.css">
+    <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
+    <link rel="stylesheet" href="../assets/css/regular.min.css">
+    <link rel="stylesheet" href="../assets/css/brands.min.css">
+    <link rel="stylesheet" href="../assets/css/solid.min.css">
+    <link rel="stylesheet" href="../assets/css/josefin-sans.min.css">
+    <link rel="stylesheet" href="../assets/css/v4-shims.min.css">
+    <script src="../assets/js/angular.js"></script>
+    <script src="../assets/js/sortable.js"></script>
+    <script src="../assets/js/index.js"></script>
+    <style>
+      /* https://codepen.io/reiinii1/pen/aPGXEa */
+      [data-tooltip] {
+  position: relative;
+  z-index: 10;
+}
+
+/* Positioning and visibility settings of the tooltip */
+[data-tooltip]:before,
+[data-tooltip]:after {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  left: 50%;
+  bottom: calc(100% + 5px); /* 5px is the size of the arrow */
+  pointer-events: none;
+  transition: 0.2s;
+  will-change: transform;
+}
+
+/* The actual tooltip with a dynamic width */
+[data-tooltip]:before {
+  content: attr(data-tooltip);
+  padding: 10px 18px;
+  min-width: 50px;
+  max-width: 300px;
+  width: max-content;
+  width: -moz-max-content;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: rgba(223, 175, 95, 0.9);
+  background-image: linear-gradient(30deg,
+    rgba(223, 175, 95, 0.44),
+    rgba(223, 175, 95, 0.44),
+    rgba(223, 175, 95, 0.44));
+  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.2);
+  color: #000;
+  text-align: center;
+  white-space: pre-wrap;
+  transform: translate(-50%, -5px) scale(0.5);
+}
+
+/* Tooltip arrow */
+[data-tooltip]:after {
+  content: '';
+  border-style: solid;
+  border-width: 5px 5px 0px 5px; /* CSS triangle */
+  border-color: rgba(223, 175, 95, 0.9) transparent transparent transparent;
+  transition-duration: 0s; /* If the mouse leaves the element, 
+                              the transition effects for the 
+                              tooltip arrow are "turned off" */
+  transform-origin: top;   /* Orientation setting for the
+                              slide-down effect */
+  transform: translateX(-50%) scaleY(0);
+}
+
+/* Tooltip becomes visible at hover */
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+  visibility: visible;
+  opacity: 1;
+}
+/* Scales from 0.5 to 1 -> grow effect */
+[data-tooltip]:hover:before {
+  transition-delay: 0.3s;
+  transform: translate(-50%, -5px) scale(1);
+}
+/* 
+  Arrow slide down effect only on mouseenter (NOT on mouseleave)
+*/
+[data-tooltip]:hover:after {
+  transition-delay: 0.5s; /* Starting after the grow effect */
+  transition-duration: 0.2s;
+  transform: translateX(-50%) scaleY(1);
+}
+/*
+  That's it for the basic tooltip.
+
+  If you want some adjustability
+  here are some orientation settings you can use:
+*/
+
+/* LEFT */
+/* Tooltip + arrow */
+[data-tooltip-location="left"]:before,
+[data-tooltip-location="left"]:after {
+  left: auto;
+  right: calc(100% + 5px);
+  bottom: 50%;
+}
+
+/* Tooltip */
+[data-tooltip-location="left"]:before {
+  transform: translate(-5px, 50%) scale(0.5);
+}
+[data-tooltip-location="left"]:hover:before {
+  transform: translate(-5px, 50%) scale(1);
+}
+
+/* Arrow */
+[data-tooltip-location="left"]:after {
+  border-width: 5px 0px 5px 5px;
+  border-color: transparent transparent transparent rgba(223, 175, 95, 0.9);
+  transform-origin: left;
+  transform: translateY(50%) scaleX(0);
+}
+[data-tooltip-location="left"]:hover:after {
+  transform: translateY(50%) scaleX(1);
+}
+
+
+
+/* RIGHT */
+[data-tooltip-location="right"]:before,
+[data-tooltip-location="right"]:after {
+  left: calc(100% + 5px);
+  bottom: 50%;
+}
+
+[data-tooltip-location="right"]:before {
+  transform: translate(5px, 50%) scale(0.5);
+}
+[data-tooltip-location="right"]:hover:before {
+  transform: translate(5px, 50%) scale(1);
+}
+
+[data-tooltip-location="right"]:after {
+  border-width: 5px 5px 5px 0px;
+  border-color: transparent rgba(223, 175, 95, 0.9) transparent transparent;
+  transform-origin: right;
+  transform: translateY(50%) scaleX(0);
+}
+[data-tooltip-location="right"]:hover:after {
+  transform: translateY(50%) scaleX(1);
+}
+
+
+
+/* BOTTOM */
+[data-tooltip-location="bottom"]:before,
+[data-tooltip-location="bottom"]:after {
+  top: calc(100% + 5px);
+  bottom: auto;
+}
+
+[data-tooltip-location="bottom"]:before {
+  transform: translate(-50%, 5px) scale(0.5);
+}
+[data-tooltip-location="bottom"]:hover:before {
+  transform: translate(-50%, 5px) scale(1);
+}
+
+[data-tooltip-location="bottom"]:after {
+  border-width: 0px 5px 5px 5px;
+  border-color: transparent transparent rgba(223, 175, 95, 0.9) transparent;
+  transform-origin: bottom;
+}
+    </style>
+  </head>
+  <body>
+    <section>
+      <div id="MultipleContainers">
+    <div id="sidebar">
+        <div class="header">
+            <a href="#" id="close-sidebar-mobile"><i class="fas fa-times-circle"></i></a>
+        </div>
+        <div class="tags">
+            <h3><i class="fas fa-filter"></i> Filter modules by tags</h3>
+            <ul id="wordcloud">
+                <li id="show-all-modules" class="selected">all</li>
+                <li>Web</li>
+                <li>Software</li>
+                <li>Hardware</li>
+                <li>Community</li>
+                <li>Organizational_Development</li>
+                <li>Media&Art</li>
+                <li>Data_Security</li>
+                <li>Open_Source</li>
+                <li>Repair</li>
+            </ul>
+            <div class="clearer"></div>
+        </div>
+        <div class="clearer"></div>
+        <ul id="module-list-side-bar" class="module-draggable-list">
+
+                
+
+        </ul>
+
+        <ul id="break-list-side-bar" class="breaks">
+            <li class="timebreak" data-duration="15">
+                <div class="time">
+                    <div style="display:inline;" data-tooltip="edit duration" data-tooltip-location="right"><i class="far fa-clock"></i></div> <span class='clock-time'>10:20am - 12:30am</span></a>
+                    <div class="edit-time">
+                        <form>
+                            <input type="text" class="title" placeholder="Time Break">
+                            <label>Duration:</label>
+                            <input type="number" class="duration" placeholder="15" min="0" max="59">
+                            <span>minutes</span>
+                            <input class="submit button" type="button" value="Save">
+                            <input class="close" type="button" value="X">
+                        </form>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="options">
+                        <a class="trash" href="#"><i class="fas fa-trash-alt"></i></a>
+                    </div>
+                    <p class="break-title">Time Break</p>
+                </div>
+                <div class="clearer"></div>
+            </li>
+            <li class="daybreak" data-duration="15" data-start="09:00">
+                <div class="time">
+                    <div style="display:inline;" data-tooltip="edit duration" data-tooltip-location="right"><i class="far fa-clock"></i></div> <span class='clock-time'>10:00am - 10:20pm</span></a>
+                    <div class="edit-time">
+                        <form>
+                            <label>Start-Time:</label>
+                            <input type="number" class="hours" placeholder="09" min="1" max="12">
+                            <span>:</span>
+                            <input type="number" class="minutes" placeholder="00" min="0" max="59">
+                            <select class="am-or-pm">
+                                <option value="am">am</option>
+                                <option value="pm">pm</option>
+                                </select>
+                            <label>Duration:</label>
+                            <input type="number" class="duration" placeholder="10" min="0" max="59">
+                            <span>minutes</span>
+                            <input type="text" class="title" placeholder="Introduction into the training">
+                            <input class="submit button" type="button" value="Save">
+                            <input class="close" type="button" value="X">
+                        </form>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="options">
+                        <a class="trash" href="#"><i class="fas fa-trash-alt"></i></a>
+                    </div>
+                    <p class="break-title">Day Break</p>
+                </div>
+                <div class="clearer"></div>
+            </li>
+        </ul>
+
+        <div class="footer">
+            <a href="#" class="help">?</a>
+            <p>CC-BY-SA 4.0 #ASKtraining<br /><a href="https://github.com/ASKnetCommunity/Training">view on Github</a></p>
+        </div>
+
+    </div>
+
+    <div id="content">
+        <div id="training-plan">
+            <div class="training-plan-icon"><i class="fas fa-clipboard-list"></i></div>
+            
+            <div id="edit-title-and-description">
+                <div class="edit-title-and-description-body">
+                    <div class="edit-title-and-description-header">
+                        <p>Edit training plan details</p>
+                        <a class="close" href="#"><i class="fas fa-times-circle"></i></a>
+                    </div>
+                    <div class="edit-title-and-description-content">
+                <form>
+                    <input type="text" class="title" placeholder="Title of the training">
+                    <textarea class="description"></textarea>
+                            <input id="submit-title" type="button" value="Save changes">
+                </form>
+            </div>
+                </div>
+            </div>
+            
+            <h1 id="training-title">#ASKtraining - Title of the Training <a id="edit-icon" class="edit" href="#edit-title-and-description">Edit title and description</a></h1>
+            <p id="training-description">Short description about the training.</p>
+            <ul id="module-list-training" class="training-list">
+                <div id="trainingstart" class="trainingstart" data-duration="15" data-start="09:00">
+                    <div class="time">
+                        <div style="display:inline;" data-tooltip="edit start time & title" data-tooltip-location="right"><i class="far fa-clock"></i></div> <span class='clock-time'>10:00am - 10:20pm</span></a>
+                        <div class="edit-time">
+                            <form>
+                                <input style="margin-bottom:20px;" type="text" class="title" placeholder="Introduction into the training">
+                                <label>Start-Time:</label>
+                                <input type="number" class="hours" placeholder="09" min="1" max="12">
+                                <span>:</span>
+                                <input type="number" class="minutes" placeholder="00" min="0" max="59">
+                                <select class="am-or-pm">
+                                    <option value="am">am</option>
+                                    <option value="pm">pm</option>
+                                </select>
+                                <div style="clear:both; padding:15px 0; display: block;">
+                                    <label>Duration:</label>
+                                    <input type="number" class="duration" placeholder="15" min="0" max="240">
+                                    <span>minutes</span>
+                                </div>
+                                    <input class="submit button" type="button" value="Save">
+                                    <input class="close" type="button" value="X">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <p class="break-title">Introduction into the training</p>
+                    </div>
+                    <div class="clearer"></div>
+                </div>
+                <div class="clearer page-break"></div>
+            </ul>
+        
+            <div class="clearer page-break"></div>
+            <div class="add-modules-breaks">
+                <p style="font-size:45px;"><i class="fas fa-arrow-up"></i></p>
+                <p>Drag and drop more modules to add</p>
+                <a href="#" id="add-module-mobile" class="button">+ Module</a>
+                <a href="#" id="add-timebreak-mobile" class="button">+ Time Break</a>
+                <a href="#" id="add-daybreak-mobile" class="button">+ Day Brake</a>
+            </div>
+        </div>
+        <div class="summary">
+            <h2>Summary</h2>
+            <ul class="duration">
+                <li class="days"><i class="fas fa-calendar-day"></i><span id="summary-days"></span><span class="label">day(s)</span></li>
+                <li class="time-icon"><i class="far fa-clock"></i></li>
+                <li class="hours"><span class="label">hours</span><span id="summary-hours"></span><span class="label">total time of your training</span></li>
+                <li class="minutes"><span class="label">minutes</span><span id="summary-minutes"></span></li>
+                <div class="clearer"></div>
+            </ul>
+            <div class="separator"></div>
+            <ul class="informations">
+                <li><i class="fas fa-cubes"></i><span id="number-of-modules"></span><span class="label">Number of modules</span></li>
+                <li><i class="fas fa-users"></i><span id="max-participants"></span><span class="label">Max. participants</span></li>
+                <li><i class="fas fa-chalkboard-teacher"></i><span id="min-trainers"></span><span class="label">Min. trainers</span></li>
+                <li><i class="fas fa-graduation-cap"></i><span id="difficulty"></span><span class="label">Difficulty level</span></li>
+                <div class="separator"></div>
+                <li><i class="fas fa-cube"></i><span id="number-of-resources"></span><span class="label">Number of resources</span></li>
+                <li><i class="fas fa-ruler-combined"></i><span id="training-space"></span><span class="label">Minimum training space</span></li>
+                <li><i class="fas fa-globe-europe"></i><span id="internet-needed"></span><span class="label">Internet needed</span></li>
+                <li><i class="fas fa-plug"></i><span id="power-needed"></span><span class="label">Power supply needed</span></li>
+                <div class="clearer"></div>
+            </ul>
+            
+        </div>
+        <div class="resource-overview">
+            <h2>Resources</h2>
+            <table id="resource-table">
+                <tr>
+                    <th class="quantity">Quantity</th>
+                    <th class="resource-name">Name of the resource</th>
+                    <th class="material-costs">Estimated Material Costs</th>
+                </tr>
+                <tr>
+                    <td class="quantity"><input></input></td>
+                    <td class="resource-name">LED Lamp</td>
+                    <td class="material-costs">20 $</td>
+                </tr>
+                <tr>
+                    <td class="quantity"><input></input></td>
+                    <td class="resource-name">Open Training Guide</td>
+                    <td class="material-costs">5 $</td>
+                </tr>
+                <tr>
+                    <td class="quantity"><input></input></td>
+                    <td class="resource-name">Solar Charger</td>
+                    <td class="material-costs">40 $</td>
+                </tr>
+                <tr class="result">
+                    <td colspan="2" class="label">Result:</td>
+                    <td class="total-price">65 $</td>
+                </tr>
+            </table>
+        </div>
+        <div class="attachments">
+            <h3>Attachments</h3>
+            <div class="attachment">
+                <input type="checkbox" id="timetable" name="timetable" value="Timetable" disabled>
+                <label for="timetable"> Timetable <a href="#"><i class="fas fa-info-circle"></i></a></label>
+            </div>
+            <div class="attachment">
+                <input type="checkbox" id="materialchecklist" name="materialchecklist" value="materialchecklist" disabled>
+                <label for="materialchecklist"> Material checklist <a href="#"><i class="fas fa-info-circle"></i></a></label>
+            </div>
+            <div class="attachment">
+                <input type="checkbox" id="name-badges" name="name-badges" value="name-badges" disabled>
+                <label for="name-badges"> Name badges <a href="#"><i class="fas fa-info-circle"></i></a></label>
+            </div>
+            <div class="overlay">
+                <p>This feature is coming</p>
+            </div>
+        </div>
+        <div class="actions">
+            <button class="button print noPrint" onclick="window.print();"><i class="fas fa-print"></i> Print</button>
+            <span class="btn-inactive button" data-tooltip="this feature is coming" data-tooltip-location="top"><i class="fas fa-save"></i> Save</span>
+            <span class="btn-inactive button" data-tooltip="this feature is coming" data-tooltip-location="top"><i class="fas fa-file-download"></i> Download</span>
+        </div>
+    </div>
+</div>
+
+
+
+
+    </section>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+# Python dependencies (for scripts/yaml2rdf)
+click
+packaging
+pyyaml
+rdflib
+wget
+gitpython

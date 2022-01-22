@@ -1,0 +1,37 @@
+@prefix ask: <http://myontology.com/> .
+@prefix aska: <http://myontology.com/authors/> .
+@prefix askm: <http://myontology.com/modules/> .
+@prefix askt: <http://myontology.com/trainings/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema1: <http://schema.org/> .
+@prefix spdx: <http://spdx.org/rdf/terms#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+askt:OSEG-Testing a ask:Training ;
+    rdfs:label "OSEG-Testing"^^xsd:string ;
+    ask:module askm:MyBigFatTrainingModule .
+
+ask:CC-BY-SA-4_0 a ask:License ;
+    rdfs:label "CC-BY-SA-4.0"^^xsd:string ;
+    schema1:file "LICENSE.md"^^xsd:string ;
+    spdx:licenseDeclared spdx:CC-BY-SA-4.0 .
+
+aska:Name_of_the_author a schema1:Person ;
+    schema1:email "rwewer@bla.com"^^xsd:string ;
+    schema1:github "werwe"^^schema1:URL ;
+    schema1:name "Name of the author"^^xsd:string ;
+    schema1:telegram "rwrrrtwwe"^^xsd:string .
+
+askm:MyBigFatTrainingModule a ask:Module ;
+    rdfs:label "MyBigFatTrainingModule"^^xsd:string ;
+    ask:blog "https://url-to-blog-posts"^^schema1:URL ;
+    ask:compatibility "ASKotec2.0 or newer"^^xsd:string ;
+    ask:issues "https://url-to-issue-list"^^schema1:URL ;
+    ask:license ask:CC-BY-SA-4_0 ;
+    ask:manual "Manual.md"^^xsd:string ;
+    ask:maxParticipants "10"^^xsd:int ;
+    ask:newIssue "https://url-to-new-issue"^^schema1:URL ;
+    ask:release "v.1.0"^^xsd:string ;
+    schema1:author aska:Name_of_the_author ;
+    schema1:duration "01:30"^^schema1:Duration .
+

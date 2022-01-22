@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# Copyright (C) 2020, Robin Vobruba <hoijui.quaero@gmail.com>
+# Licensed under the GPL v3, see LICENSE-GPLv3.md.
+#
+# Pre-generates some files,
+# to be ready to run jekyll *build* or *serve*.
+
+# Exit immediately on each error and unset variable;
+# see: https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail/
+#set -Eeuo pipefail
+set -Eeu
+
+script_dir=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+tools_dir=$(cd "$script_dir/.."; pwd)
+project_dir=$(pwd)
+data_dir="$project_dir/_data"
+
+cd "$project_dir"
+
+# This creates a copy of all markdown files
+# which is pre-processed with jekylls Liquid engine,
+# but *not* converted to HTML.
+for md in **.md
+do
+	md_txt="${md}.txt"
+	if ! [ -e "$md_txt" ]
+	then
+		{
+			echo "---"
+			echo "---"
+			echo "{% include_relative $md %}"
+		} > "$md_txt"
+		echo "Created file '$md_txt', including '$md'."
+	fi
+done
+
+mkdir -p "$data_dir"
+
+# Generate the RDF from the YAML
+for part in training module resource
+do
+	if [ -f "./$part.yml" ]
+	then
+		# Copy meta-data file to jekylls data folder
+		cp "$part.yml" "$data_dir"
+		# Generate the RDF from the YAML
+		"$script_dir/yaml2rdf.py" \
+			"$data_dir/$part.yml" \
+			"$data_dir/$part.ttl" \
+			"$data_dir/Prefixes.pref"
+		# Copy the generated RDF/Turtle file back to the repo root,
+		# so it will be copied to the publish dir (e.g. _site)
+		cp "$data_dir/$part.ttl" ./
+	fi
+done
+
+# Generate the specific Jekyll config out of the template
+"$script_dir/git_replace_project_variables.py" \
+	"$tools_dir/_config.template.yml" \
+	"$project_dir/_config.yml"
+
+# Copy over some static Jekyll files
+cp -r -f \
+	"$tools_dir/Gemfile"* \
+	"$tools_dir/_layouts" \
+	"$project_dir/"

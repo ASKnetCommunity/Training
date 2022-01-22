@@ -1,0 +1,6 @@
+version: '0.1.0'
+
+training:
+  name: OSEG-Testing
+  modules:
+    - rdf-url: https://asktraining.github.io/Module/module.ttl
