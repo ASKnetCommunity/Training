@@ -271,9 +271,6 @@ body.index #content .button {
 #sidebar .module .content .options a.trash {
   display: none;
 }
-#sidebar .module .content .options .button {
-  display: none;
-}
 #sidebar .module .content:hover {
   -webkit-transform: scale(1.04);
   -ms-transform: scale(1.04);
@@ -538,19 +535,11 @@ a.help {
 .module .content .options {
   top: 3px;
   right: 10px;
-  text-align: right;
 }
 .module .content .options a.add-module {
   display: none;
   color: #fff;
   font-size: 0.8em;
-}
-.module .content .options .button {
-  padding: 3px 0;
-  width: 80px;
-  font-size: 0.7em;
-  margin: 0;
-  color: #212121;
 }
 .module .content .intro {
   margin-bottom: 15px;

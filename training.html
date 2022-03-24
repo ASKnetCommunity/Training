@@ -65,11 +65,9 @@ permalink: /training/
                     <div class="options">
                         <a class="button add-module" src="#">Add Module</a>
                         <a class="info" href="#" data-tooltip="this feature is coming" data-tooltip-location="left"><i class="fas fa-info-circle"></i></a> <a class="trash" href="#"><i class="fas fa-trash-alt"></i></a>
-                        {% if module.module.url %}<a href="{{ module.module.url }}" class="button" target="_blank">Source &nbsp; <i class="fas fa-external-link-alt"></i></a>{% endif %}
                     </div>
                     <h2>{{ module.module.name }}</h2>
                     <p class="intro">Introduction into the module</p>
-                    {% if module.module.license %}<p class="intro">License: {{ module.module.license }}</p>{% endif %}
                     <div class="thumbnail"><img src="/assets/img/modules/{{ module.module.pic-url }}" class="thumbnail"></div>
                     <div class="module-meta">
                         <div class="module-meta">
@@ -129,8 +127,8 @@ permalink: /training/
                                                 </div>
                                             </div>
                                             <div class="content">
-                                                {% if res.resource.url %}<a href="{{ res.resource.url }}" class="button" target="_blank">Source &nbsp; <i class="fas fa-external-link-alt"></i></a>{% endif %}
-                                                <div><strong>{{ res.resource.name }}</strong> | {{ diff_text }} | {{ res.resource.duration }} minutes | {{ res.resource.cost }} ${% if res.resource.license %} | License: {{ res.resource.license }}{% endif %}</div>
+                                                <a href="{{ res.resource.url }}" class="button" target="_blank">Manual &nbsp; <i class="fas fa-file-download"></i></a>
+                                                <div><strong>{{ res.resource.name }}</strong> | {{ diff_text }} | {{ res.resource.duration }} minutes | {{ res.resource.cost }} $</div>
                                                 {% if res.resource.description %} 
                                                     <p>{{ res.resource.description }}</p>
                                                 {% endif %}
@@ -212,7 +210,7 @@ permalink: /training/
 
         <div class="footer">
             <a href="#" class="help">?</a>
-            <p>CC-BY-SA 4.0 #ASKtraining<br /><a href="https://github.com/ASKnetCommunity/Training">view on Github</a> | <a href="http://www.asknet.community">#ASKnet Website</a></p>
+            <p>CC-BY-SA 4.0 #ASKtraining<br /><a href="https://github.com/ASKnetCommunity/Training">view on Github</a></p>
         </div>
 
     </div>
