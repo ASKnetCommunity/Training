@@ -178,15 +178,17 @@ function initiateEditTitle(){
     editButton.onclick = showEditTitle;
     let submitButton = document.getElementById('submit-title');
     submitButton.onclick = submitTitle;
+    let form = document.querySelector('#edit-title-and-description form');
+    clickButtonOnEnter(form, '.title', '#submit-title');
 }
 
 function showEditTitle(){
     let editTitle = document.getElementById('edit-title-and-description');
-    if(editTitle.style.transform == ''){
-        editTitle.style.transform = '';
+    if(editTitle.style.transform == 'scale(0, 0)' || editTitle.style.transform == ''){
+        editTitle.style.transform = 'scale(1,1)';
         return;
     }
-    editTitle.style.transform = 'scale(1,1)';
+    editTitle.style.transform = 'scale(0,0)';
 }
 
 function submitTitle(){
@@ -1581,6 +1583,7 @@ function populateTrainingPlanFromCache(cache){
     initiateEditNotes();
     updateAuthorList();
     updateTableOfContents();
+    initiateTableOfContentsToggleButton();
 }
 
 /**
