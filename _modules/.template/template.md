@@ -3,7 +3,7 @@ layout: module
 module:
     name: ''
     id: 'template'      #can only contain small letters, numbers, minus and underscore. needs to be the same as the file name
-    url: ''     #url that is linked in the table view, can be empty
+    url: ''     #url that is linked in the overview of a module (manual, educational instructions for the overall module etc.), can be empty
     tag: ''     #comma-separated list, e.g. 'Web' or if more than 1: 'Open Source & Knowledge, Hardware & Repair, Sustainability & Environment, Media & Art, Community & Moderation, Data_Security & Research'
     description: ""
     pic-url: opentech.jpg
