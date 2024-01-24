@@ -7,7 +7,7 @@ module:
     tag: 'Open Source & Knowledge, Sustainability, Hardware & Repair'
     description: "Drinking water is a valuable resource! This module tells about the dangers of drinking polluted water and shows how to set up a lowcost DIY water filter."
     pic-url: diy_water_filter.png
-    duration: 0 # 0    #introduction time in minutes, the resources have their own time blocks
+    duration: 15 #introduction time in minutes, the resources have their own time blocks
     max-participants: 10
     min-trainers: 1
     difficulty: 1   #1-3, 1 is easyest
