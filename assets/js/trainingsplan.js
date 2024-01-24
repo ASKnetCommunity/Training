@@ -176,6 +176,8 @@ function cloneDayBreak(start, duration){
 function initiateEditTitle(){
     let editButton = document.getElementById('edit-icon');
     editButton.onclick = showEditTitle;
+    let closeButton = document.querySelector('#edit-title-and-description .close')
+    closeButton.onclick = showEditTitle;
     let submitButton = document.getElementById('submit-title');
     submitButton.onclick = submitTitle;
     let form = document.querySelector('#edit-title-and-description form');
@@ -1581,6 +1583,7 @@ function populateTrainingPlanFromCache(cache){
     initiateTimeEdit();
     initiateTrashButton();
     initiateEditNotes();
+    initiateEditTitle();
     updateAuthorList();
     updateTableOfContents();
     initiateTableOfContentsToggleButton();

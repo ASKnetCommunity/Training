@@ -5,7 +5,7 @@ layout: default
   <div class="container">
     <div class="d-flex pl-3 mb-3 justify-content-between align-items-center">
       <h1>Module: {{ page.module.name | escape }}</h1>
-      <a id="link-to-overview" class="h5 cursor-pointer" href="/"><i class="fas fa-long-arrow-alt-left"></i> Overview</a>
+      <a id="link-to-overview" class="h5 pointer-none hide" onclick="goHome()"><i class="fas fa-long-arrow-alt-left"></i> Overview</a>
     </div>
     
     <div class="row">
@@ -105,3 +105,31 @@ layout: default
   </div>
 </section>
  /other profiles -->
+
+<script>
+  /**
+   * Takes the user to overview page
+   */
+  function goHome(){
+    window.location = '/';
+  }
+
+  /**
+   * Shows/hides the link to overview page
+   */
+  function toggleLinkToOverview(){
+    let linkToOverview = document.getElementById('link-to-overview');
+    const isIframe = window.top !== window.self;
+    if (isIframe) {
+      linkToOverview.classList.add('hide', 'pointer-none');
+      linkToOverview.classList.remove('cursor-pointer');
+    } else {
+      linkToOverview.classList.remove('hide', 'pointer-none');
+      linkToOverview.classList.add('cursor-pointer');
+    }
+  }
+
+  window.onload = function(){
+    toggleLinkToOverview();
+  }
+</script>
