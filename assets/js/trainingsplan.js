@@ -176,7 +176,7 @@ function cloneDayBreak(start, duration){
 function initiateEditTitle(){
     let editButton = document.getElementById('edit-icon');
     editButton.onclick = showEditTitle;
-    let closeButton = document.querySelector('#edit-title-and-description .close')
+    let closeButton = document.querySelector('#edit-title-and-description .close-popup')
     closeButton.onclick = showEditTitle;
     let submitButton = document.getElementById('submit-title');
     submitButton.onclick = submitTitle;
@@ -186,11 +186,11 @@ function initiateEditTitle(){
 
 function showEditTitle(){
     let editTitle = document.getElementById('edit-title-and-description');
-    if(editTitle.style.transform == 'scale(0, 0)' || editTitle.style.transform == ''){
-        editTitle.style.transform = 'scale(1,1)';
+    if(editTitle.style.transform == 'scale(0, 0)' || editTitle.style.transform == '' || editTitle.style.transform == 'scale(0)'){
+        editTitle.style.transform = 'scale(1, 1)';
         return;
     }
-    editTitle.style.transform = 'scale(0,0)';
+    editTitle.style.transform = 'scale(0, 0)';
 }
 
 function submitTitle(){
