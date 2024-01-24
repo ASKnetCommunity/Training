@@ -11,6 +11,6 @@ module:
     max-participants: 20
     min-trainers: 1
     difficulty: 1   #1-3, 1 is easyest
-    license: '[CC-BY-SA 4.0](https://choosealicense.com/licenses/cc-by-4.0/)'
-    res: ''   #comma-separated list e.g. 'askotec', or if more than 1: 'askotec, ohg'
+    license: '[CC-BY 4.0 International](https://choosealicense.com/licenses/cc-by-4.0/)'
+    res: 'oer-intro,oer-dev,oer-licensing'       #comma-separated list e.g. 'askotec', or if more than 1: 'askotec, ohg'
 ---  
