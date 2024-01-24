@@ -7,6 +7,6 @@ resource:
     duration: 60
     difficulty: 2
     cost: 3.50      #in $ (dont leave empty, but type 0 instead)
-    license: '[CC-BY-SA 4.0 International](https://choosealicense.com/licenses/cc-by-sa-4.0/)'
+    license: '[CC-BY-SA 4.0](https://choosealicense.com/licenses/cc-by-sa-4.0/)'
     author: "[Dawa Edina Hillary](https://github.com/dawaedina27)"
 ---
