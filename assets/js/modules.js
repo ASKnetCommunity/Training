@@ -9,6 +9,7 @@
           this.element = element;
           this.difficulties = Array.from(document.querySelectorAll('.filter-difficulty button'));
           this.participants = Array.from(document.querySelectorAll('.filter-participant button'));
+          this.tags = Array.from(document.querySelectorAll('.filter-tag button'));
           this.reset = Array.from(document.querySelectorAll('.filter-reset'));
           this.shuffle = new Shuffle(element, {
               itemSelector: '.module-item',
@@ -20,6 +21,7 @@
           this.filters = {
               difficulties: [],
               participants: [],
+              tags: [],
           };
           this._bindEventListeners();
 
@@ -46,15 +48,20 @@
       _bindEventListeners = function () {
           this._onDifficultyChange = this._handleDifficultyChange.bind(this);
           this._onParticipantChange = this._handleParticipantChange.bind(this);
+          this._onTagChange = this._handleTagChange.bind(this);
           this._onResetClick = this._resetFilters.bind(this);
 
           this.difficulties.forEach(function (button) {
               button.addEventListener('click', this._onDifficultyChange);
           }, this);
 
+          this.tags.forEach(function (button) {
+            button.addEventListener('click', this._onTagChange);
+          }, this);
+
           this.participants.forEach(function (button) {
             button.addEventListener('click', this._onParticipantChange);
-        }, this);
+          }, this);
 
           this.reset.forEach(function (button) {
               button.addEventListener('click', this._onResetClick);
@@ -76,6 +83,14 @@
           });
       };
 
+      _getCurrentTagFilters = function () {
+        return this.tags.filter(function (button) {
+            return button.classList.contains('active');
+        }).map(function (button) {
+            return button.getAttribute('data-tag');
+        });
+      };
+
       _getCurrentParticipantFilters = function () {
           return this.participants.filter(function (button) {
               return button.classList.contains('active');
@@ -85,7 +100,7 @@
       };
 
       _resetFilters = function () {
-          var allFilterButtons = Array.from(document.querySelectorAll('.filter-difficulty button, .filter-participant button'));
+          var allFilterButtons = Array.from(document.querySelectorAll('.filter-difficulty button, .filter-tag button, .filter-participant button'));
 
           // remove all "active" classes
           allFilterButtons.forEach(function (btn) {
@@ -95,6 +110,7 @@
           //filter() (filter aktualisieren)
           this.filters.difficulties = this._getCurrentDifficultyFilters();
           this.filters.participants = this._getCurrentParticipantFilters();
+          this.filters.tags = this._getCurrentTagFilters();
           this.filter();
       }
 
@@ -103,6 +119,12 @@
        */
        _handleDifficultyChange = function (evt) {
           var button = evt.currentTarget;
+          let similarButtons = [];
+          this.difficulties.forEach((btn) => {
+            if (btn.dataset.difficulty == button.dataset.difficulty) {
+              similarButtons.push(btn);
+            }
+          })
 
           if (button.getAttribute('data-difficulty') == 'All') {
               // remove all "active" classes
@@ -113,8 +135,10 @@
 
               if (button.classList.contains('active')) {
                   button.classList.remove('active');
+                  similarButtons.forEach((btn) => btn.classList.remove('active'));
               } else {
                   button.classList.add('active');
+                  similarButtons.forEach((btn) => btn.classList.add('active'));
               }
           }
 
@@ -123,11 +147,48 @@
       };
 
       /**
+       * A tag state changed, update the current filters and filter
+       */
+      _handleTagChange = function (evt) {
+        var button = evt.currentTarget;
+        let similarButtons = [];
+        this.tags.forEach((btn) => {
+            if (btn.dataset.tag == button.dataset.tag) {
+                similarButtons.push(btn);
+            }
+        })
+
+        if (button.getAttribute('data-tag') == 'All') {
+            // remove all "active" classes
+            this.tags.forEach(function (btn) {
+                btn.classList.remove('active');
+            });
+        } else {
+            if (button.classList.contains('active')) {
+                button.classList.remove('active');
+                similarButtons.forEach((btn) => btn.classList.remove('active'));
+            } else {
+                button.classList.add('active');
+                similarButtons.forEach((btn) => btn.classList.add('active'));
+            }
+        }
+
+        this.filters.tags = this._getCurrentTagFilters();
+        this.filter();
+    };
+
+      /**
        * A participant button was clicked. Update filters and display.
        * @param {Event} evt Click event object.
        */
       _handleParticipantChange = function (evt) {
         var button = evt.currentTarget;
+        let similarButtons = [];
+        this.participants.forEach((btn) => {
+            if (btn.dataset.participant == button.dataset.participant) {
+              similarButtons.push(btn);
+            }
+        })
 
         if (button.getAttribute('data-participant') == 'All') {
             // remove all "active" classes
@@ -139,12 +200,14 @@
             // Treat these buttons like radio buttons where only 1 can be selected.
             if (button.classList.contains('active')) {
                 button.classList.remove('active');
+                similarButtons.forEach((btn) => btn.classList.remove('active'));
             } else {
                 this.participants.forEach(function (btn) {
                     btn.classList.remove('active');
                 });
 
                 button.classList.add('active');
+                similarButtons.forEach((btn) => btn.classList.add('active'));
             }
         }
 
@@ -200,8 +263,10 @@
 
           var difficulties = this.filters.difficulties;
           var participants = this.filters.participants;
+          var tags = this.filters.tags;
           var difficulty = JSON.parse(element.getAttribute('data-difficulties'));
           var participant = JSON.parse(element.getAttribute('data-participants'));
+          var tag = (element.dataset.tags).split(',').map((t) => t.trim());
 
           // If there are active filters and this difficulty is not in the filter array 
           if (difficulties.length > 0 && !difficulties.commonElements(difficulty)) {
@@ -210,6 +275,10 @@
 
           // If there are active filters and this participant is not in the filter array 
           if (participants.length > 0 && !participants.commonElements(participant)) {
+            return false;
+          }
+
+          if (tags.length > 0 && !tags.commonElements(tag)) {
             return false;
           }
 
@@ -271,10 +340,12 @@
       // Advanced filtering
       addSearchFilter() {
           const searchInput = document.querySelector('.js-shuffle-search');
+          const clearSearch = document.getElementById('reset-search');
           if (!searchInput) {
-              return;
+            return;
           }
           searchInput.addEventListener('keyup', this._handleSearchKeyup.bind(this));
+          clearSearch.addEventListener('click', this._clearSearch.bind(this));
       }
 
       /**
@@ -283,6 +354,9 @@
        */
       _handleSearchKeyup(evt) {
           const searchText = evt.target.value.toLowerCase();
+          let url = new URL(sessionStorage.getItem(TRAINING_URL));
+          url.searchParams.set('search', searchText);
+          sessionStorage.setItem(TRAINING_URL, url.href);
           this.shuffle.filter((element, shuffle) => {
               // If there is a current filter applied, ignore elements that don't match it.
               if (shuffle.group !== Shuffle.ALL_ITEMS) {
@@ -294,10 +368,19 @@
                       return false;
                   }
               }
-              const titleElement = element.querySelector('.module-item__name');
-              const titleText = titleElement.textContent.toLowerCase().trim();
-              return titleText.indexOf(searchText) !== -1;
+              const titleText = element.dataset.name.toLowerCase();
+              const description = element.dataset.description.toLowerCase();
+              return titleText.includes(searchText) || description.includes(searchText);
           });
+      }
+
+      _clearSearch(evt){
+        let searchInput = document.querySelector('.js-shuffle-search');
+        searchInput.value = '';
+        this.filter();
+        let url = new URL(sessionStorage.getItem(TRAINING_URL));
+        url.searchParams.delete('search');
+        sessionStorage.setItem(TRAINING_URL, url.href);
       }
   }
 

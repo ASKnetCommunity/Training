@@ -672,6 +672,9 @@ a.help
     margin-right: 10px
     cursor: pointer
 
+#reset-training
+    margin-right: 0 !important
+
 .resource-list
     clear: both
     margin-left: -160px
@@ -821,7 +824,7 @@ a.help
         .overlay
             opacity: 1
 
-#reference-button,toc-list
+#reference-button,
 #toc-button
     cursor: pointer
     i
@@ -893,6 +896,7 @@ a.help
         margin-block-start: 0.5rem
         margin-block-end: 0.5rem
     form
+        margin-right: 0.5rem
         .input-container
             display: flex
             align-items: center
@@ -940,6 +944,11 @@ a.help
     justify-content: space-between
     align-items: center
 
+.flex-center-center
+    display: flex
+    justify-content: center
+    align-items: center
+
 .reset-notes
     i
         font-size: 0.6rem
@@ -956,7 +965,6 @@ a.help
     color: white
     padding: 10px
     font-size: 1.5rem
-    width: fit-content !important
     z-index: 999 !important
     height: 20px
     width: 20px
@@ -973,3 +981,47 @@ a.help
 #scroll-up
     bottom: 10px
     right: 5px
+
+#back-to-overview
+    position: absolute
+    top: 15px
+    right: 55px
+    font-weight: bold
+    cursor: pointer
+    color: black
+
+.cursor-pointer
+    cursor: pointer
+
+.loader
+    width: 24px
+    height: 24px
+    border: 5px dotted #fff
+    border-radius: 50%
+    display: inline-block
+    position: relative
+    box-sizing: border-box
+    animation: rotation 2s linear infinite
+    margin-left: 10px
+
+@keyframes rotation
+    0%
+        transform: rotate(0deg)
+    100%
+        transform: rotate(360deg)
+
+#saving
+    position: fixed
+    top: 15px
+    left: 50%
+    padding: 10px 20px
+    background: #000
+    color: #fff
+    border-radius: 10px
+    font-weight: 400
+    z-index: 99
+    opacity: 0
+    transition: all 2s
+
+.show
+    opacity: 1 !important

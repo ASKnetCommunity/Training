@@ -10,7 +10,14 @@ const CLASS_CLOSETIME = 'close'
 const CLASS_EDITTIME = 'edit-time';
 const CLASS_MODULEDURATION = 'module-duration';
 const CLASS_MULTIDRAGSELECTED = 'multidrag-selected';
+const CLASS_INTRODUCTION = 'introduction'
 const GROUP_MODULELIST = 'module-list-group';
+const TRAINING_URL = 'trainingUrl';
+const TRAINING_DATA = 'training-data';
+const SUMMARY_DATA = 'summary-data';
+const ID_SUMMARY_EL = 'summary-text-2';
+const ID_TRAINING_TITLE = 'training-title';
+const ID_TRAINING_DESCRIPTION = 'training-description';
 
 /**
  * Drag & Drop
@@ -79,8 +86,8 @@ function initiateSortable() {
             },
             fallbackOnBody: true,
             animation: ANIMATION_SPEED,
-            onAdd: calculateTime,
-            onUpdate: calculateTime
+            onAdd: onResourcesUpdate,
+            onUpdate: onResourcesUpdate
         });
         index++;
     }
@@ -120,23 +127,70 @@ function onModuleDrag(evt){
 }
 
 /**
+ * Performs actions after update to resources list
+ * @param {Event} evt Dragging event
+ */
+function onResourcesUpdate(evt) {
+    calculateTime();
+    clearPageBreaks();
+    backupTrainingPlan();
+}
+
+/**
+ * Clones and activates a timebreak
+ * @param {Number} duration duration of the break
+ * @param {String} title Title of the break e.g. lunch, recess
+ * @returns {Node} Timebreak Node
+ */
+function cloneTimeBreak(duration, title){
+    let MODULE_TIME_BREAK = document.getElementsByClassName(CLASS_TIMEBREAK)[0].cloneNode(true);
+    MODULE_TIME_BREAK.dataset.duration = duration ? Number(duration) : 15;
+    if (title) {
+        let titleEl = MODULE_TIME_BREAK.querySelector('.break-title');
+        titleEl.innerText = title;
+    }
+    activateTimeBreak(MODULE_TIME_BREAK);
+    let form = MODULE_TIME_BREAK.querySelector('form');
+    clickButtonOnEnter(form, `.duration`, `.${CLASS_SUBMITTIME}`);
+    return MODULE_TIME_BREAK;
+}
+
+/**
+ * Clones and activates a daybreak
+ * @param {String} start starting time of the day
+ * @param {Number} duration duration of the day's introduction
+ * @returns {Node} daybreak Node
+ */
+function cloneDayBreak(start, duration){
+    let MODULE_DAY_BREAK = document.getElementsByClassName(CLASS_DAYBREAK)[0].cloneNode(true);
+    MODULE_DAY_BREAK.dataset.start = start ?? '09:00';
+    MODULE_DAY_BREAK.dataset.duration = duration ? Number(duration) : 15;
+    activateTimeBreak(MODULE_DAY_BREAK);
+    return MODULE_DAY_BREAK;
+}
+
+
+/**
  * Button onclick initialisations
  */
-
 function initiateEditTitle(){
     let editButton = document.getElementById('edit-icon');
     editButton.onclick = showEditTitle;
+    let closeButton = document.querySelector('#edit-title-and-description .close-popup')
+    closeButton.onclick = showEditTitle;
     let submitButton = document.getElementById('submit-title');
     submitButton.onclick = submitTitle;
+    let form = document.querySelector('#edit-title-and-description form');
+    clickButtonOnEnter(form, '.title', '#submit-title');
 }
 
 function showEditTitle(){
     let editTitle = document.getElementById('edit-title-and-description');
-    if(editTitle.style.transform == ''){
-        editTitle.style.transform = '';
+    if(editTitle.style.transform == 'scale(0, 0)' || editTitle.style.transform == '' || editTitle.style.transform == 'scale(0)'){
+        editTitle.style.transform = 'scale(1, 1)';
         return;
     }
-    editTitle.style.transform = 'scale(1,1)';
+    editTitle.style.transform = 'scale(0, 0)';
 }
 
 function submitTitle(){
@@ -144,13 +198,14 @@ function submitTitle(){
     editTitle.style.transform = 'scale(0,0)';
 
     let form = this.parentNode;
-    let title = document.getElementById('training-title');
+    let title = document.getElementById(ID_TRAINING_TITLE);
     let newTitle = getChildByClassName(form, 'title').value;
     if(newTitle != '') title.innerText = newTitle;
 
     let description = document.getElementById('training-description');    
     let newDescription = getChildByClassName(form, 'description').value;
     if(newDescription != '') description.innerText = newDescription;
+    backupTrainingPlan();
 }
 
 /**
@@ -161,15 +216,14 @@ function initiateEditSummary(){
     editButton.onclick = showEditSummary;
     let submitButton = document.getElementById('submit-summary');
     submitButton.onclick = submitSummary;
-    let closeButton = document.querySelector(`#edit-summary .close`);
+    let closeButton = document.getElementById('close-summary');
     closeButton.onclick = showEditSummary;
-    let resetButton = document.querySelector(`#edit-summary .reset-summary`);
+    let resetButton = document.getElementById('reset-summary');
     resetButton.onclick = clearSummary;
 }
 
 /**
  * Open and close the summary edit dialog
- * @returns 
  */
 function showEditSummary(){
     let editSummary = document.getElementById('edit-summary');
@@ -198,6 +252,7 @@ function submitSummary(){
         summaryEl.forEach((el) => el.innerHTML = ``);
         editButton.innerText = 'Add summary notes';
     }
+    backupTrainingPlan();
 }
 
 /**
@@ -245,18 +300,22 @@ function onClickDeleteOrMoveListElement() {
         deleteIntroductionDuration(currentElement);
         let moduleListSideBar = document.getElementById(ID_MODULE_LIST_SIDE_BAR);
         moduleListSideBar.appendChild(currentElement);
+        updateUrl(currentElement.id);
         calculateTime();
-        insertDayBreaks();
+        // insertDayBreaks();
+        clearPageBreaks();
         calculateSummary();
         updateTableOfContents();
         updateAuthorList();
+        backupTrainingPlan();
         return;
     }
     currentElement.remove();
     calculateTime();
-    insertDayBreaks();
+    // insertDayBreaks();
     calculateSummary();
     updateTableOfContents();
+    backupTrainingPlan();
 }
 
 function initiateTimeEdit(){
@@ -375,6 +434,7 @@ function submitTime(){
     
     form.parentNode.style.display = '';
     calculateTime()
+    backupTrainingPlan();
 }
 
 function initiateCloseButton(){
@@ -485,10 +545,8 @@ function initiateAddTimebreak(){
 }
 
 function addTimebreak(){
-    const timeBreak = document.getElementsByClassName(CLASS_TIMEBREAK)[0].cloneNode(true);
     let moduleList = document.getElementById(ID_MODULE_LIST_TRAINING);
-    activateTimeBreak(timeBreak);
-    moduleList.appendChild(timeBreak);
+    moduleList.appendChild(cloneTimeBreak());
     calculateTime();
     calculateSummary();
 }
@@ -508,6 +566,62 @@ function addDaybreak(){
 }
 
 /**
+ * Populates the training plan with data from url or session storage
+ */
+function populateTrainingPlan(){
+    const params = new URL(window.location).searchParams;
+    const modules = params.get("modules");
+    const trainingData = sessionStorage.getItem(TRAINING_DATA);
+    const summaryData = sessionStorage.getItem(SUMMARY_DATA);
+    const trainingTitle = sessionStorage.getItem(ID_TRAINING_TITLE);
+    const trainingDescription = sessionStorage.getItem(ID_TRAINING_DESCRIPTION);
+    let dataIncludesModule = false;
+    if (trainingData) {
+        let el = document.createElement('div');
+        el.innerHTML = trainingData;
+        dataIncludesModule = !!(el.querySelector('.module'));
+    } 
+    if (dataIncludesModule) {
+        populateTrainingPlanFromCache(trainingData);
+    } else {
+        if (modules) {
+            addModulesToTrainingPlan(modules.split(','));
+        }
+    }
+    if (summaryData) {
+        document.getElementById(ID_SUMMARY_EL).innerHTML = summaryData;
+    }
+    if (trainingTitle) {
+        document.getElementById(ID_TRAINING_TITLE).innerHTML = trainingTitle;
+    }
+    if (trainingDescription) {
+        document.getElementById(ID_TRAINING_DESCRIPTION).innerHTML = trainingDescription;
+    }
+    backupTrainingPlan();
+}
+
+/**
+ * Adds a list of modules to the training plan
+ * @param {String} modules list of modules e.g. [oer,bmc]
+ */
+function addModulesToTrainingPlan(modules){
+    let moduleList = document.getElementById(ID_MODULE_LIST_TRAINING);
+    modules.forEach((module) => {
+        let el = document.getElementById(module);
+        if (el) {
+            moduleList.appendChild(el);
+            insertIntroductionDuration(el);
+            insertTimeBreaks(el);
+        }
+    });
+    calculateTime();
+    // insertDayBreaks();
+    calculateSummary();
+    updateAuthorList();
+    updateTableOfContents();
+}
+
+/**
  * Dynamic Calculations
  */
 
@@ -515,11 +629,12 @@ function runDynamicCalculationsOnUpdate(evt) {
     let mod = evt.item;
     insertTimeBreaks(mod);
     calculateTime();
-    insertDayBreaks();
+    // insertDayBreaks();
+    clearPageBreaks();
     calculateSummary();
     updateAuthorList();
-    initiateEditNotes();
     updateTableOfContents();
+    backupTrainingPlan();
 }
 
 function runDynamicCalculationsOnAdd(evt) {
@@ -530,19 +645,57 @@ function runDynamicCalculationsOnAdd(evt) {
             mod = evt.items[i];
             insertTimeBreaks(mod);
             insertIntroductionDuration(mod);
+            updateUrl(mod.id);
         }
     } else {
         // for cases where only one module is selected
         mod = evt.item;
         insertTimeBreaks(mod);
         insertIntroductionDuration(mod);
+        updateUrl(mod.id);
     }
     calculateTime();
-    insertDayBreaks();
+    // insertDayBreaks();
+    clearPageBreaks();
     calculateSummary();
     updateAuthorList();
-    initiateEditNotes();
     updateTableOfContents();
+    backupTrainingPlan();
+}
+
+/**
+ * Removes pagebreak before module if preceded by daybreak
+ */
+function clearPageBreaks(){
+    let modules = document.getElementById(ID_MODULE_LIST_TRAINING).querySelectorAll(`.${CLASS_MODULE}`);
+    modules.forEach((module) => {
+        let sibling = module.previousSibling;
+        if (sibling && sibling.classList && sibling.classList.contains(CLASS_DAYBREAK)) {
+            module.classList.toggle('pagebreak');
+        }
+    });
+}
+
+/**
+ * Updates the url with module id after module is removed or added to training plan
+ * @param {String} id module id
+ */
+function updateUrl(id){
+    let url = new URL(window.location);
+    let modules = url.searchParams.get('modules');
+    if (modules) {
+        let moduleSet = new Set(modules.split(','));
+        if (moduleSet.has(id)) {
+            moduleSet.delete(id);
+        } else {
+            moduleSet.add(id);
+        }
+        url.searchParams.set('modules', Array.from(moduleSet).join(','));
+    } else {
+        url.searchParams.set('modules', id);
+    }
+    sessionStorage.setItem(TRAINING_URL, url.href);
+    window.history.pushState({}, '', url);
 }
 
 const INTRODUCTION_TEXT = 'Introduction';
@@ -554,13 +707,8 @@ const INTRODUCTION_TEXT = 'Introduction';
 function insertIntroductionDuration(mod) {
     if (mod.className.includes(CLASS_MODULE)) {
         let resourceList = mod.querySelector('.resource-list');
-        let MODULE_TIME_BREAK = document.getElementsByClassName(CLASS_TIMEBREAK)[0].cloneNode(true);
-        MODULE_TIME_BREAK.dataset.duration = mod.dataset.duration > 0 ? mod.dataset.duration : 15;
-        let title = MODULE_TIME_BREAK.querySelector('.break-title');
-        title.innerText = INTRODUCTION_TEXT;
-        activateTimeBreak(MODULE_TIME_BREAK);
-        let form = MODULE_TIME_BREAK.querySelector('form');
-        clickButtonOnEnter(form, `.duration`, `.${CLASS_SUBMITTIME}`);
+        let MODULE_TIME_BREAK = cloneTimeBreak(mod.dataset.duration > 0 ? mod.dataset.duration : 15, INTRODUCTION_TEXT);
+        MODULE_TIME_BREAK.classList.add(CLASS_INTRODUCTION);
         resourceList.prepend(MODULE_TIME_BREAK);
     }
 }
@@ -571,7 +719,7 @@ function insertIntroductionDuration(mod) {
  */
 function deleteIntroductionDuration(mod){
     let MODULE_DURATION = mod.querySelector('.resource-list').firstChild;
-    if (MODULE_DURATION.className.includes(CLASS_TIMEBREAK)) {
+    if (MODULE_DURATION && MODULE_DURATION.className && MODULE_DURATION.className.includes(CLASS_TIMEBREAK)) {
         let title = MODULE_DURATION.querySelector('.break-title');
         if (title.innerText === INTRODUCTION_TEXT) {
             MODULE_DURATION.remove();
@@ -862,9 +1010,7 @@ function insertTimeBreaks(mod) {
 }
 
 function addTimeBreakAfter(resource) {
-    const MODULE_TIME_BREAK = document.getElementsByClassName(CLASS_TIMEBREAK)[0].cloneNode(true);
-    activateTimeBreak(MODULE_TIME_BREAK);
-    resource.parentNode.insertBefore(MODULE_TIME_BREAK, resource.nextSibling);
+    resource.parentNode.insertBefore(cloneTimeBreak(), resource.nextSibling);
 }
 
 /**
@@ -918,9 +1064,7 @@ function insertDayBreaks() {
  * @param {Node} resource Resource element
  */
 function addDayBreakAfter(resource) {
-    const MODULE_DAY_BREAK = document.getElementsByClassName(CLASS_DAYBREAK)[0].cloneNode(true);
-    activateTimeBreak(MODULE_DAY_BREAK);
-    resource.parentNode.insertBefore(MODULE_DAY_BREAK, resource.nextSibling);
+    resource.parentNode.insertBefore(cloneDayBreak(), resource.nextSibling);
     calculateTime();
 }
 
@@ -1043,12 +1187,35 @@ function updateSelectableModulesList() {
 }
 
 function initiateSearchButton() {
+    const params = new URL(window.location).searchParams;
+    const searchText = params.get('search');
     let button = document.getElementById('search-bar-button');
     button.onclick = updateModulesBySearch;
     let form = document.getElementById('search-bar-form');
     clickButtonOnEnter(form, '#search-bar-input', '#search-bar-button');
     let input = document.getElementById('search-bar-input');
     input.oninput = updateModulesBySearch;
+    if (searchText) {
+        input.value = searchText;
+        updateModulesBySearch();
+    }
+    let resetButton = document.getElementById('reset-search');
+    resetButton.onclick = resetSearch;
+}
+
+/**
+ * Clears the search filter
+ */
+function resetSearch(){
+    let url = new URL(window.location);
+    let input = document.getElementById('search-bar-input');
+    input.value = '';
+    showAllModules();
+    let all = document.getElementById('show-all-modules');
+    all.className = all.className.concat(CLASS_SELECTED);
+    url.searchParams.delete('search');
+    sessionStorage.setItem(TRAINING_URL, url.href);
+    window.history.pushState({}, '', url);
 }
 
 /**
@@ -1056,6 +1223,7 @@ function initiateSearchButton() {
  * @returns 
  */
 function updateModulesBySearch(){
+    let url = new URL(window.location);
     const searchWord = document.getElementById('search-bar-input').value.toLowerCase().trim();
     const sideBarModules = Array.from(document.getElementById(ID_MODULE_LIST_SIDE_BAR).getElementsByClassName(CLASS_MODULE));
     if (searchWord.length > 0) {
@@ -1074,6 +1242,9 @@ function updateModulesBySearch(){
         all.className = all.className.concat(CLASS_SELECTED);
         return;
     }
+    url.searchParams.set('search', searchWord);
+    sessionStorage.setItem(TRAINING_URL, url.href);
+    window.history.pushState({}, '', url);
 }
 
 /**
@@ -1105,7 +1276,6 @@ function toggleShowTags () {
  * Author list
  */
 function updateAuthorList(){
-    updateAuthorLinkTarget();
     let moduleListEl = document.getElementById('module-list-training');
     let authorList =  moduleListEl.querySelectorAll('.author');
     let authorsWithResources = {};
@@ -1144,7 +1314,7 @@ function updateAuthorList(){
             // Single resource item that includes the name, url, and license of the resource
             let resourceItem = item.resources[resource];
 
-            resourceListEls +=`<li><a href="${resourceItem.url}">${resourceItem.name}</a>`;
+            resourceListEls +=`<li><a href="${resourceItem.url}" target="_blank">${resourceItem.name}</a>`;
             // Add resource link if it exists
             if (resourceItem.url) {
                 resourceListEls += `<span class="display-print"> (${resourceItem.url})</span>`;
@@ -1237,33 +1407,22 @@ function contractAuthorList(){
 }
 
 /**
- * Updates the author links to open in a new tab
- */
-function updateAuthorLinkTarget(){
-    let moduleList = document.getElementById('module-list-training');
-    let links = moduleList.querySelectorAll('.author-data a');
-    links.forEach((link) => {
-        link.setAttribute("target", "_blank");
-    });
-}
-
-/**
  * Allows user to add custom notes
  */
 function initiateEditNotes(){
-    let editButtons = document.querySelectorAll(`#${ID_MODULE_LIST_TRAINING} .edit-trainer-notes-button`);
+    let editButtons = document.querySelectorAll(`.edit-trainer-notes-button`);
     for (let editButton of editButtons) {
         editButton.onclick = showEditNotes;
     }
-    let submitButtons = document.querySelectorAll(`#${ID_MODULE_LIST_TRAINING} .submit-notes`);
+    let submitButtons = document.querySelectorAll(`.submit-notes`);
     for (let submitButton of submitButtons) {
         submitButton.onclick = submitNotes;
     }
-    let dismissButtons = document.querySelectorAll(`#${ID_MODULE_LIST_TRAINING} .close-notes-popup`);
+    let dismissButtons = document.querySelectorAll(`.close-notes-popup`);
     for (let dismissButton of dismissButtons) {
         dismissButton.onclick = dismissEditNotes;
     }
-    let resetButtons = document.querySelectorAll(`#${ID_MODULE_LIST_TRAINING} .reset-notes`);
+    let resetButtons = document.querySelectorAll(`.reset-notes`);
     for (let resetButton of resetButtons) {
         resetButton.onclick = clearNote;
     }
@@ -1295,6 +1454,7 @@ function submitNotes(){
     } else {
         addNotesButton.innerHTML = '+';
     }
+    backupTrainingPlan();
 }
 
 /**
@@ -1386,6 +1546,64 @@ function contractTableOfContents(){
 }
 
 /**
+ * Open links enclosed with the class open-new-tab in a new tab e.g. licenses, authors
+ */
+function openLinksInNewTab(){
+    let links = document.querySelectorAll('.open-new-tab a');
+    links.forEach((link) => {
+        link.setAttribute("target", "_blank");
+    });
+}
+
+/**
+ * Caches the training plan
+ */
+function backupTrainingPlan(){
+    const savingIndicator = document.getElementById('saving');
+    savingIndicator.classList.add('show');
+    const trainingData = document.getElementById(ID_MODULE_LIST_TRAINING).innerHTML.replace(/>\s+</g,'><');
+    const summaryData = document.getElementById(ID_SUMMARY_EL).innerHTML;
+    const trainingTitle = document.getElementById(ID_TRAINING_TITLE).innerHTML;
+    const trainingDescription = document.getElementById(ID_TRAINING_DESCRIPTION).innerHTML;
+    sessionStorage.setItem(TRAINING_DATA, trainingData);
+    sessionStorage.setItem(SUMMARY_DATA, summaryData);
+    sessionStorage.setItem(ID_TRAINING_TITLE, trainingTitle);
+    sessionStorage.setItem(ID_TRAINING_DESCRIPTION, trainingDescription);
+    setTimeout(() => savingIndicator.classList.remove('show'), 1000);
+}
+
+/**
+ * Populates the training plan with data from session storage
+ * @param {String} cache cache from session storage
+ */
+function populateTrainingPlanFromCache(cache){
+    document.getElementById(ID_MODULE_LIST_TRAINING).innerHTML = cache;
+    initiateSortable();
+    removeModulesFromSidebar();
+    initiateTimeEdit();
+    initiateTrashButton();
+    initiateEditNotes();
+    initiateEditTitle();
+    updateAuthorList();
+    updateTableOfContents();
+    initiateTableOfContentsToggleButton();
+}
+
+/**
+ * Deletes modules in the training plan from the sidebar
+ */
+function removeModulesFromSidebar(){
+    let trainingModules = document.getElementById(ID_MODULE_LIST_TRAINING).querySelectorAll(`.${CLASS_MODULE}`);
+    let sideBarModules = document.getElementById(ID_MODULE_LIST_SIDE_BAR);
+    trainingModules.forEach((module) => {
+        let el = sideBarModules.querySelector(`#${module.id}`);
+        if (el) {
+            el.remove();
+        }
+    });
+}
+
+/**
  * and here we go
  */
 window.onload = function () {
@@ -1398,9 +1616,13 @@ window.onload = function () {
     initiateMobileButtons();
     calculateTime();
     calculateSummary();
+    initiateEditNotes();
     initiateAuthorListToggleButton();
     initiateSearchButton();
     initiateShowTagsButton();
     initiateEditSummary();
     initiateTableOfContentsToggleButton();
+    populateTrainingPlan();
+    clearPageBreaks();
+    openLinksInNewTab();
 }

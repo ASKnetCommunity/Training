@@ -13,6 +13,15 @@
     <script src="{{ site.baseurl }}/assets/js/sortable-1.15.0.js"></script>
     <script src="{{ site.baseurl }}/assets/js/trainingsplan.js"></script>
     <script src="{{ site.baseurl }}/assets/js/glightbox-3.2.0.min.js"></script>
+    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:site_name" content="{{ site.title }}">
+    {% if page.module.description %}<meta property="og:description" content="{{ page.module.description }}">{% elsif page.description %}<meta property="og:description" content="{{ page.description }}">{% else %}<meta property="og:description" content="{{ site.description }}">{% endif %}
+    <meta property="og:type" content="website">
+    {% if page.module.pic-url %}<meta property="og:image" content="{{ site.url }}{{ base.url }}/assets/img/modules/{{page.module.pic-url }}">{% elsif page.image %}<meta property="og:image" content="{{ site.url }}{{ base.url }}{{ page.image }}">{% else %}<meta property="og:image" content="{{ site.url }}{{ base.url }}/assets/img/screenshot.png">{% endif %}
+    <meta property="og:url" content="{{ site.url }}{{ base.url }}{{ page.url }}" />
+    <meta property="og:locale" content="en_GB" />
+    <meta name="twitter:card" content="summary_large_image">
+    {% if page.module.pic-url %}<meta property="twitter:image" content="{{ site.url }}{{ base.url }}/assets/img/modules/{{page.module.pic-url }}">{% elsif page.image %}<meta property="twitter:image" content="{{ site.url }}{{ base.url }}{{ page.image }}">{% else %}<meta property="twitter:image" content="{{ site.url }}{{ base.url }}/assets/img/screenshot.png">{% endif %}
     <style>
       /* https://codepen.io/reiinii1/pen/aPGXEa */
       [data-tooltip] {

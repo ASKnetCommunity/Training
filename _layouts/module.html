@@ -3,23 +3,25 @@ layout: default
 ---
 <section class="section p-4">
   <div class="container">
-    <div class="row pl-3">
-      <h1 class="m-4">{{ page.module.name | escape }}</h1>
+    <div class="d-flex pl-3 mb-3 justify-content-between align-items-center">
+      <h1>Module: {{ page.module.name | escape }}</h1>
+      <a id="link-to-overview" class="h5 pointer-none hide" onclick="goHome()"><i class="fas fa-long-arrow-alt-left"></i> Overview</a>
     </div>
     
     <div class="row">
       <div class="col-lg-6 col-sm-12">
         {% if page.gallery %}
-        <div class="profile-gallery-slider">
-            {% for gallery in page.gallery %}
-              <img src="{{ site.baseurl }}/{{ gallery.url }}" alt="" />
-            {% endfor %}
-        </div>
+          <div class="profile-gallery-slider">
+              {% for gallery in page.gallery %}
+                <img src="{{ site.baseurl }}/{{ gallery.url }}" alt="" />
+              {% endfor %}
+          </div>
         {% else %}
-        <img src="{{ base.url }}/assets/img/modules/{{page.module.pic-url }}" class="img-fluid img-portrait mr-lg-5 mb-4" alt="{{page.module.name}}">
+          <img src="{{ base.url }}/assets/img/modules/{{page.module.pic-url }}" class="img-fluid img-portrait mr-lg-5 mb-4" alt="{{page.module.name}}">
         {% endif %}
+        <!-- <button class="btn-secondary p-4 rounded-5 h5 border border-black hide-in-iframe">Start Training</button> -->
       </div>
-      <div class="col-lg-5 col-sm-12 bg-light shadow p-4 module-details">
+      <div class="col-lg-6 col-sm-12 bg-light shadow p-4 module-details">
         {% if page.module.description %}
           {{ page.module.description | markdownify }}
         {% endif %}
@@ -38,13 +40,13 @@ layout: default
             
             {% case page.module.difficulty %}
               {% when 1 %}
-                {% assign module_diff_text = 'easy' %}
+                {% assign module_diff_text = 'Easy' %}
               {% when 2 %}
-                {% assign module_diff_text = 'medium' %}
+                {% assign module_diff_text = 'Medium' %}
               {% when 3 %}
-                {% assign module_diff_text = 'advanced' %}
+                {% assign module_diff_text = 'Advanced' %}
               {% else %}
-                {% assign module_diff_text = difficulty %}
+                {% assign module_diff_text = Difficulty %}
             {% endcase %}
             <p class="btn btn-sm btn-outline-secondary" data-tooltip="Difficulty-Level"><i class="fas fa-tachometer-alt"></i> {{ module_diff_text }}</p>
           {% endif %}
@@ -57,13 +59,15 @@ layout: default
         </div>
         <div class="clearfix"></div>
         
-        {% if page.module.res %}
+        {% if page.module.res.size > 0 %}
+          {%- assign resource_list = page.module.res | split: ',' -%}
           <div class="resources">
-            <h4>Resources:</h4>
+            <h4>Resources</h4>
             <ul class="list-group list-group-flush">
-              {% for actual_res in page.module.res %}
+              {% for actual_res in resource_list %}
+                {%- assign striped_res = actual_res | strip -%}
                 {% for res in site.resources %}
-                    {% if res.resource.id == actual_res %}
+                    {% if res.resource.id == striped_res %}
                         <li class="list-group-item"><a href="{{ res.resource.url }}" target="_blank">{{ res.resource.name }}</a></li>
                     {% endif %}
                 {% endfor %}
@@ -101,3 +105,31 @@ layout: default
   </div>
 </section>
  /other profiles -->
+
+<script>
+  /**
+   * Takes the user to overview page
+   */
+  function goHome(){
+    window.location = '/';
+  }
+
+  /**
+   * Shows/hides the link to overview page
+   */
+  function toggleLinkToOverview(){
+    let linkToOverview = document.getElementById('link-to-overview');
+    const isIframe = window.top !== window.self;
+    if (isIframe) {
+      linkToOverview.classList.add('hide', 'pointer-none');
+      linkToOverview.classList.remove('cursor-pointer');
+    } else {
+      linkToOverview.classList.remove('hide', 'pointer-none');
+      linkToOverview.classList.add('cursor-pointer');
+    }
+  }
+
+  window.onload = function(){
+    toggleLinkToOverview();
+  }
+</script>

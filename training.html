@@ -6,7 +6,7 @@ permalink: /training/
 <div id="MultipleContainers">
     <div id="sidebar">
         <div class="header">
-            <a href="#" id="close-sidebar-mobile"><i class="fas fa-times-circle"></i></a>
+            <a  id="close-sidebar-mobile"><i class="fas fa-times-circle"></i></a>
         </div>
         <div class="tags">
             <h3><i class="fas fa-filter"></i> Filter modules by tags <a id="show-tags-button" data-tooltip="hide tags" data-tooltip-location="right"><i class="fas fa-angle-down"></i></a></h3>
@@ -18,7 +18,7 @@ permalink: /training/
                     {% for tag in module_tags %}
                         {%- assign striped_tag = tag | strip -%}
                         {% unless tag_list contains striped_tag %}
-                            <li>{{ striped_tag }}</li>
+                            <li id="{{ striped_tag }}">{{ striped_tag }}</li>
                             {%- assign tag_list = tag_list | push: striped_tag -%}
                         {% endunless %}
                     {% endfor %}
@@ -26,7 +26,10 @@ permalink: /training/
             </ul>
             <div class="clearer"></div>
             <div id="search-bar">
-                <h4>Search module by name</h4>
+                <div class="flex-between-center">
+                    <h4>Search modules</h4>
+                    <a id="reset-search" class="cursor-pointer" data-tooltip="Clear search" data-tooltip-location="right"><i class="fas fa-sync-alt"></i></a>
+                </div>
                 <form id="search-bar-form">
                     <div class="input-container">
                         <input id="search-bar-input" type="text" />
@@ -127,7 +130,7 @@ permalink: /training/
                         </h2>
                         <div class="icons print-display-none">
                             <a class="button add-module" src="#">Add Module</a>
-                            <a class="info glightbox" href="{{ module.url }}" data-glightbox="max-width: 700; height: 800;" data-tooltip="more details" data-tooltip-location="left"><i class="fas fa-info-circle"></i></a> <a class="trash"><i class="fas fa-trash-alt"></i></a>
+                            <a class="info glightbox" href="{{ module.url }}" data-glightbox="max-width: 700; height: 95vh;" data-tooltip="more details" data-tooltip-location="left"><i class="fas fa-info-circle"></i></a> <a class="trash"><i class="fas fa-times-circle"></i></a>
                             {% if module.module.url %}<a href="{{ module.module.url }}" class="button" target="_blank">Source &nbsp; <i class="fas fa-external-link-alt"></i></a>{% endif %}
                             <a class="select-check" data-tooltip="select module" data-tooltip-location="left"><i class="far fa-circle"></i></a>
                         </div>
@@ -185,7 +188,7 @@ permalink: /training/
                             <button type="button" class="intro" data-tooltip="Min. Trainers" data-tooltip-location="top"><i class="fas fa-chalkboard-teacher"></i> {{ module.module.min-trainers }}</button>
                             <button type="button" class="intro" data-tooltip="Cost" data-tooltip-location="top"><i class="fas fa-dollar-sign"></i> {{ module_cost }}</button>
                         </div>
-                        <div class="license intro">{{ module.module.license | markdownify }}</div>
+                        <div class="license intro open-new-tab">{{ module.module.license | markdownify }}</div>
                     </div>
 
                     <div class="resources">   
@@ -206,7 +209,7 @@ permalink: /training/
                                                 {% assign diff_text = 'unknown' %}
                                         {% endcase %}
 
-                                        <li class="resource" data-duration="{{ res.resource.duration }}" data-name="{{ res.resource.name }}" data-cost="{{ res.resource.cost }}" data-space="" data-internet="" data-power="">
+                                        <li id="{{ res.resource.id }}" class="resource" data-duration="{{ res.resource.duration }}" data-name="{{ res.resource.name }}" data-cost="{{ res.resource.cost }}" data-space="" data-internet="" data-power="">
                                             {% if res.resource.duration > 0 %}
                                                 <div class="time">
                                                     <div style="display:inline;" data-tooltip="edit duration" data-tooltip-location="right"><i class="far fa-edit print-display-none"></i></div> <span class='clock-time'>03:45pm</span>
@@ -281,13 +284,15 @@ permalink: /training/
                                                 </div>
                                                 <div class="author-license flex-between-center">
                                                     {% if res.resource.author %}
-                                                        <div class="author-data">
+                                                        <div class="author-data open-new-tab">
                                                             {{ res.resource.author | prepend: "By: " | markdownify }}
                                                             <span class="author" data-author="{{ res.resource.author }}" data-resource="{{ res.resource.name }}" data-resource-url="{{ res.resource.url }}" data-resource-license="{{ res.resource.license }}"></span>
                                                         </div>
                                                     {% endif %}
                                                     {% if res.resource.license %}
-                                                        {{ res.resource.license | prepend: "License: " | markdownify }}
+                                                        <div class="open-new-tab">
+                                                            {{ res.resource.license | prepend: "License: " | markdownify }}
+                                                        </div>
                                                     {% endif %}
                                                 </div>
                                             </div>
@@ -314,7 +319,7 @@ permalink: /training/
         <ul id="break-list-side-bar" class="breaks">
             <li class="timebreak" data-duration="15">
                 <div class="time">
-                    <div style="display:inline;" data-tooltip="edit duration" data-tooltip-location="right"><i class="far fa-edit print-display-none"></i></div> <span class='clock-time'>10:20am</span></a>
+                    <div style="display:inline;" data-tooltip="edit duration" data-tooltip-location="right"><i class="far fa-edit print-display-none cursor-pointer"></i></div> <span class='clock-time'>10:20am</span></a>
                     <div class="edit-time">
                         <form>
                             <input type="text" class="title" placeholder="Time Slot">
@@ -322,13 +327,13 @@ permalink: /training/
                             <input type="number" class="duration" placeholder="15" min="0">
                             <span>minutes</span>
                             <input class="submit button" type="button" value="Save">
-                            <input class="close" type="button" value="X">
+                            <input class="close cursor-pointer" type="button" value="X">
                         </form>
                     </div>
                 </div>
                 <div class="content">
                     <div class="options">
-                        <a class="trash"><i class="fas fa-trash-alt"></i></a>
+                        <a class="trash cursor-pointer"><i class="fas fa-times-circle"></i></a>
                     </div>
                     <p class="break-title">Time Slot</p>
                 </div>
@@ -358,7 +363,7 @@ permalink: /training/
                 </div>
                 <div class="content">
                     <div class="options">
-                        <a class="trash"><i class="fas fa-trash-alt"></i></a>
+                        <a class="trash"><i class="fas fa-times-circle"></i></a>
                     </div>
                     <p class="break-title">Day Break</p>
                 </div>
@@ -367,7 +372,7 @@ permalink: /training/
         </ul>
 
         <div class="footer">
-            <a href="#" class="help">?</a>
+            <a class="help">?</a>
             <p>CC-BY-SA 4.0 #ASKtraining<br /><a href="https://github.com/ASKnetCommunity/Training">view on Github</a> | <a href="http://www.asknet.community">#ASKnet Website</a></p>
         </div>
 
@@ -383,7 +388,7 @@ permalink: /training/
                 <div class="edit-title-and-description-body">
                     <div class="edit-title-and-description-header">
                         <p>Edit training plan details</p>
-                        <a class="close" href="#"><i class="fas fa-times-circle"></i></a>
+                        <a class="close-popup cursor-pointer"><i class="fas fa-times-circle"></i></a>
                     </div>
                     <div class="edit-title-and-description-content">
                         <form>
@@ -398,13 +403,13 @@ permalink: /training/
                 <div class="edit-summary-body">
                     <div class="edit-title-and-description-header">
                         <p>Edit summary</p>
-                        <a class="close" href="#"><i class="fas fa-times-circle"></i></a>
+                        <a id="close-summary" class="cursor-pointer"><i class="fas fa-times-circle"></i></a>
                     </div>
                     <div class="edit-title-and-description-content">
                         <form>
                             <textarea id="summary-text-input"></textarea>
                             <div class="flex-start-center">
-                                <input class="reset-summary" type="button" value="Reset">
+                                <input id="reset-summary" class="reset-summary" type="button" value="Reset">
                                 <input id="submit-summary" type="button" value="Save changes">
                             </div>
                         </form>
@@ -415,8 +420,11 @@ permalink: /training/
             <div id="title-and-edit-button" style="display: flex; gap: 1rem; align-items: center;">
                 <h1 id="training-title">{{ page.title }} - Title of the Training</h1>
             </div>
-            <p id="training-description">Short description about the training.</p>
-            <a id="edit-icon" class="edit-button print-display-none" href="#edit-title-and-description">Edit title and description</a>
+            <p id="training-description" class="font-weight-normal">Short description about the training.</p>
+            <div class="flex-between-center">
+                <a id="edit-icon" class="edit-button print-display-none">Edit title and description</a>
+                <a id="reset-training" class="edit-button print-display-none" onclick="clearCache()">Reset <i class="fas fa-sync-alt"></i></a>
+            </div>
             <ul id="module-list-training" class="training-list">
                 <div id="trainingstart" class="trainingstart" data-duration="15" data-start="09:00">
                     <div class="time">
@@ -485,9 +493,9 @@ permalink: /training/
             <div class="add-modules-breaks">
                 <p style="font-size:45px;"><i class="fas fa-arrow-up"></i></p>
                 <p>Drag and drop more modules to add</p>
-                <a href="#" id="add-module-mobile" class="button">+ Module</a>
-                <a href="#" id="add-timebreak-mobile" class="button">+ Time Slot</a>
-                <a href="#" id="add-daybreak-mobile" class="button">+ Day Break</a>
+                <a  id="add-module-mobile" class="button">+ Module</a>
+                <a  id="add-timebreak-mobile" class="button">+ Time Slot</a>
+                <a  id="add-daybreak-mobile" class="button">+ Day Break</a>
             </div>
         </div>
         <div class="summary print-display-none">
@@ -509,7 +517,7 @@ permalink: /training/
             </ul>
         </div>
         <a id="edit-summary-button" class="edit-button print-display-none">Add summary notes</a>
-        <div class="summary-text print-display-none font-weight-normal"></div>
+        <div id="summary-text-2" class="summary-text print-display-none font-weight-normal"></div>
         <div class="resource-overview pagebreak">
             <h3>Resources</h3>
             <table id="resource-table">
@@ -543,15 +551,15 @@ permalink: /training/
             <h3>Attachments</h3>
             <div class="attachment">
                 <input type="checkbox" id="timetable" name="timetable" value="Timetable" disabled>
-                <label for="timetable"> Timetable <a href="#"><i class="fas fa-info-circle"></i></a></label>
+                <label for="timetable"> Timetable <a ><i class="fas fa-info-circle"></i></a></label>
             </div>
             <div class="attachment">
                 <input type="checkbox" id="materialchecklist" name="materialchecklist" value="materialchecklist" disabled>
-                <label for="materialchecklist"> Material checklist <a href="#"><i class="fas fa-info-circle"></i></a></label>
+                <label for="materialchecklist"> Material checklist <a ><i class="fas fa-info-circle"></i></a></label>
             </div>
             <div class="attachment">
                 <input type="checkbox" id="name-badges" name="name-badges" value="name-badges" disabled>
-                <label for="name-badges"> Name badges <a href="#"><i class="fas fa-info-circle"></i></a></label>
+                <label for="name-badges"> Name badges <a ><i class="fas fa-info-circle"></i></a></label>
             </div>
             <div class="overlay">
                 <p>This feature is coming</p>
@@ -578,10 +586,18 @@ permalink: /training/
 <div id="scroll-up" class="scroll-button print-display-none" data-tooltip="Scroll to top" data-tooltip-location="left" onclick="window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })">
     <i class="fas fa-angle-up"></i>
 </div>
-
+<a id="back-to-overview" class="print-display-none" onclick="clearCache('/')"><i class="fas fa-long-arrow-alt-left"></i> Back to overview </a>
+<div id="saving" class="flex-center-center">Saving <span class="loader"></span></div>
 
 <script>
     const lightbox = GLightbox({
         touchNavigation: true,
     });
+    /**
+     * Clears the cache and reloads the page
+     */
+    function clearCache(path){
+        sessionStorage.clear();
+        window.location = path ?? window.location.origin + window.location.pathname;
+    }
 </script>

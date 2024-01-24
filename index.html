@@ -1,6 +1,7 @@
 ---
 layout: default
-title: 'Start training plan'
+title: 'Create your own training plan'
+description: 'Browse modules, assemble your training sequence, and easily adjust settings. Print your plan. Ready for a successful training!'
 permalink: /
 ---
 
@@ -39,7 +40,7 @@ permalink: /
       <div class="text-center px-5 pb-5"><a class="brand" href="{{ site.baseurl }}/"><img src="{{ base.url }}/assets/img/asknet-logo_transp.png" alt="#ASKnet Logo" width="100%"></a></div>
       <div class="text-center"><img class="" src="{{ base.url }}/assets/img/screenshot.png" width="100%"></div>
       <main class="progressbar-button">
-        <div class="button btn-secondary" name="submit_button" onclick="redirectCustom();"><span class="text">Start training planner</span></div>
+        <div class="button btn-secondary" name="submit_button" onclick="redirectCustom();"><span class="text mx-3">Plan your training →</span></div>
         <div class="progress-bar"></div>
         <svg x="0px" y="0px" viewBox="0 0 25 30" style="enable-background:new 0 0 25 30;">
             <path class="check" class="st0" d="M2,19.2C5.9,23.6,9.4,28,9.4,28L23,2"/>
@@ -95,7 +96,7 @@ permalink: /
         {% comment %} {% if tag-array contains "Unknown" %}
           {% assign tag-array = tag-array | join: "|" | replace: "|Unknown|","|" | split: "|" | reverse | unshift: "Unknown" | reverse %}
         {% endif %} {% endcomment %}
-        <div class="d-flex bd-highlight">
+        <div class="d-flex align-items-center bd-highlight">
           <div class="dropdown bd-highlight p-2">
             <button class="btn btn-sm btn-primary dropdown-toggle" data-flip="false" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Difficulty-Level</button>
             <div class="dropdown-menu sm mr-2 mb-2 filter-difficulty">
@@ -127,7 +128,7 @@ permalink: /
             </div>
           </div>
           
-          <!-- <div class="dropdown p-2">
+          <div class="dropdown p-2">
             <button class="btn btn-sm btn-primary dropdown-toggle" data-flip="false" type="button" id="dropdownMenu3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tags</button>
             <div class="dropdown-menu mr-2 mb-2 filter-tag">
               <button class="dropdown-item all" type="button" data-tag="All">All</button>
@@ -136,11 +137,12 @@ permalink: /
                 <button class="dropdown-item" type="button" data-tag="{{ tag }}">{{ tag }}</button>
               {% endfor %}
             </div>
-          </div> -->
+          </div>
          
           <div class="p-2 flex-grow-1">
             <input type="search" class="form-control col-6 js-shuffle-search" id="filters-search-input" placeholder="search by module title">
           </div>
+          <a id="reset-search" class="cursor-pointer" data-tooltip="Clear search" data-tooltip-location="top"><i class="fas fa-sync-alt"></i></a>
         </div>
       </div>
     </div>
@@ -151,6 +153,7 @@ permalink: /
   <div class="container">
     <div class="row row-cols-3 row-cols-sm-2 g-3 my-shuffle-container">
       {% for module in site.modules %}
+        {% assign tag-list = "" | split: ',' %}
         {% if module.module.difficulty == nil or module.module.difficulty == "Unknown" %}
           {% assign difficulty = "Unknown" %}
         {% else %}
@@ -164,7 +167,11 @@ permalink: /
         {% if module.module.tag == nil or module.module.tag == "Unknown" %}
           {% assign tag = "Unknown" %}
         {% else %}
-          {% assign tag = module.module.tag %}
+          {% assign module_tags = module.module.tag | split: ',' %}
+          {% for tag in module_tags %}
+            {%- assign striped_tag = tag | strip -%}
+            {% assign tag-list = tag-list | push: striped_tag %}
+          {% endfor %}
         {% endif %}
         {% case module.module.difficulty %}
           {% when 1 %}
@@ -176,15 +183,15 @@ permalink: /
           {% else %}
               {% assign module_diff_text2 = difficulty %}
         {% endcase %}
-        <div class="module-item col-lg-4 col-md-6 p-2" data-difficulties="[&quot;{{ difficulty }}&quot;]" data-participants="[&quot;{{ participant }}&quot;]">
+        <div id="{{ module.module.id }}" class="module-item col-lg-4 col-md-6 p-2" data-difficulties="[&quot;{{ difficulty }}&quot;]" data-participants="[&quot;{{ participant }}&quot;]" data-id="{{ module.module.id }}" data-tags="{{ module.module.tag }}" data-name="{{ module.module.name }}" data-description="{{ module.module.description }}">
           <div class="col-12 card shadow-sm">
             <div class="module-img">
-              <a href="{{ module.url }}"><img src="{{ site.baseurl }}/assets/img/modules/{{ module.module.pic-url }}" class="img-fluid d-block mx-auto"></a>
+              <a href="{{ module.url }}" onclick='event.stopPropagation();'><img src="{{ site.baseurl }}/assets/img/modules/{{ module.module.pic-url }}" class="img-fluid d-block mx-auto"></a>
             </div>
             <div class="card-body module-content">
-              <h3 class="card-title module-item__name"><a class="card-link" href="{{ module.url }}">{{ module.module.name }}</a></h3>
+              <h3 class="card-title module-item__name"><a class="card-link" href="{{ module.url }}">{{ module.module.name }}</a><a class="select-check" data-tooltip="select" data-tooltip-location="right"><i class="far fa-circle"></i></a></h3>
               {% if module.module.description %}
-                <p class="card-text">{{ module.module.description | markdownify }}</p>
+                <p class="card-text">{{ module.module.description | truncatewords: 20 | markdownify }}</p>
               {% endif %}
               {% if module.module.res %}
                 {%- assign resource_list = module.module.res | split: ',' -%}
@@ -205,14 +212,22 @@ permalink: /
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <div class="filter-participant">
-                    <button type="button" class="btn btn-sm btn-outline-secondary" data-tooltip="Max. Participants" data-tooltip-location="right" data-participant="{{ participant }}"><i class="fas fa-users-viewfinder"></i> {{ participant }}</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-tooltip="Max. Participants" data-tooltip-location="top" data-participant="{{ participant }}"><i class="fas fa-users-viewfinder"></i> {{ participant }}</button>
                   </div>
                   <div class="filter-difficulty">
                     <button type="button" class="btn btn-sm btn-outline-secondary" data-tooltip="Difficulty-Level" data-tooltip-location="top" data-difficulty="{{ difficulty }}"><i class="fas fa-tachometer-alt"></i> {{ module_diff_text2 }}</button>
                   </div>
-                  <button type="button" class="btn btn-sm btn-outline-secondary" data-tooltip="Min. Trainers" data-tooltip-location="top"><i class="fas fa-chalkboard-teacher"></i> {{ module.module.min-trainers }}</button>
                 </div>
                 <small class="text-muted text-end mt-2">{{ module.module.license | markdownify }}</small>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <div class="filter-tag">
+                    {%- for tag in tag-list -%}
+                      <button type="button" class="btn btn-sm btn-primary m-1 px-2 py-1" data-tooltip="{{ tag }}" data-tooltip-location="top" data-tag="{{ tag }}">{{ tag }}</button>
+                    {%- endfor -%}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -226,15 +241,19 @@ permalink: /
 
 <!-- Progressbar to load traininsplan-->
 <script>
-  function toPage() 
-  {  
-  window.location="/training/";
+  function toPage() {  
+    window.location.href = sessionStorage.getItem('trainingUrl') ?? new URL('/training', window.location.href).href;
   } 
   function redirectCustom(){ 
-  //redirect after 5 seconds for i min pass 60000
-  setTimeout('toPage()', 5000);
+    sessionStorage.removeItem(TRAINING_DATA);
+    sessionStorage.removeItem(SUMMARY_DATA);
+    sessionStorage.removeItem(ID_TRAINING_TITLE);
+    sessionStorage.removeItem(ID_TRAINING_DESCRIPTION);
+    //redirect after 5 seconds for i min pass 60000
+    setTimeout('toPage()', 5000);
   }
 </script>
 <script src="{{ site.baseurl }}/assets/js/progressbar.js"></script>
 <script src="{{ site.baseurl }}/assets/js/counter.js"></script>
 <script src="{{ site.baseurl }}/assets/js/modules.js"></script>
+<script src="{{ site.baseurl }}/assets/js/dynamicLinks.js"></script>
