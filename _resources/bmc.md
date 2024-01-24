@@ -7,7 +7,7 @@ resource:
     duration: 90     #in minutes
     difficulty: 1     #1-3, 1 is easyest
     cost: 0      #in $
-    license: '[CC-BY-SA 4.0 International](https://choosealicense.com/licenses/cc-by-sa-4.0/) '
+    license: '[CC-BY-SA 4.0](https://choosealicense.com/licenses/cc-by-sa-4.0/)'
     author: "[#ASKnet](https://asknet.community/)"
 ---
 

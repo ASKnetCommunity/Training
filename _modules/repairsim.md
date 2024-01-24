@@ -11,7 +11,7 @@ module:
     max-participants: 15
     min-trainers: 1
     difficulty: 1
-    license: '[CC-BY-SA 4.0 International](https://choosealicense.com/licenses/cc-by-sa-4.0/)'
+    license: '[CC-BY-SA 4.0](https://choosealicense.com/licenses/cc-by-sa-4.0/)'
     res: ['askotecintro']
     # marker
 ---  
