@@ -1,7 +1,7 @@
 ---
 resource:
     name: 'Definition of Terms'
-    id: 'terms_training_planner'      #can only contain small letters, numbers, minus and underscore. needs to be the same as the file name
+    id: 'terms_training_planner'
     description: "Explore this resource to get a clear explanation of important terms. It's like a helpful guide that makes understanding the various parts of the #ASKnet training platform easy. Dive in, and you'll feel more confident navigating the platform!"
     url: 'https://github.com/ASKnetCommunity/Training/wiki/The-Training-Planner#definition-of-terms'
     duration: 30     #in minutes
