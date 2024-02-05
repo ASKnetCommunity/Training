@@ -6,7 +6,7 @@ resource:
     url: "https://askotec.openculture.agency/"
     duration: 30
     difficulty: 1
-    cost: 1000
-    license: CC-BY-SA 4.0
+    cost: 0
+    license: '[CC-BY-SA 4.0](https://choosealicense.com/licenses/cc-by-sa-4.0/)'
     author: "[r0g_agency](https://openculture.agency/)"
 ---
