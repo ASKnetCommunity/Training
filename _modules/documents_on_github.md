@@ -12,5 +12,5 @@ module:
     min-trainers: 1
     difficulty: 3
     license: '[CC-BY-SA 4.0](https://choosealicense.com/licenses/cc-by-sa-4.0/)'
-    res: 'github_introduction, github_oer_template, github_image_integration'
+    res: 'github_introduction, github_oer_template, github_image_integration, brief_markdown_lang_guide'
 ---  

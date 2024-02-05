@@ -6,7 +6,7 @@ permalink: /training/
 <div id="MultipleContainers">
     <div id="sidebar">
         <div class="header">
-            <a href="#" id="close-sidebar-mobile"><i class="fas fa-times-circle"></i></a>
+            <a  id="close-sidebar-mobile"><i class="fas fa-times-circle"></i></a>
         </div>
         <div class="tags">
             <h3><i class="fas fa-filter"></i> Filter modules by tags <a id="show-tags-button" data-tooltip="hide tags" data-tooltip-location="right"><i class="fas fa-angle-down"></i></a></h3>
@@ -27,7 +27,7 @@ permalink: /training/
             <div class="clearer"></div>
             <div id="search-bar">
                 <div class="flex-between-center">
-                    <h4>Search module by name</h4>
+                    <h4>Search modules</h4>
                     <a id="reset-search" class="cursor-pointer" data-tooltip="Clear search" data-tooltip-location="right"><i class="fas fa-sync-alt"></i></a>
                 </div>
                 <form id="search-bar-form">
@@ -372,7 +372,7 @@ permalink: /training/
         </ul>
 
         <div class="footer">
-            <a href="#" class="help">?</a>
+            <a class="help">?</a>
             <p>CC-BY-SA 4.0 #ASKtraining<br /><a href="https://github.com/ASKnetCommunity/Training">view on Github</a> | <a href="http://www.asknet.community">#ASKnet Website</a></p>
         </div>
 
@@ -388,7 +388,7 @@ permalink: /training/
                 <div class="edit-title-and-description-body">
                     <div class="edit-title-and-description-header">
                         <p>Edit training plan details</p>
-                        <a class="close" href="#"><i class="fas fa-times-circle"></i></a>
+                        <a class="close-popup cursor-pointer"><i class="fas fa-times-circle"></i></a>
                     </div>
                     <div class="edit-title-and-description-content">
                         <form>
@@ -420,9 +420,9 @@ permalink: /training/
             <div id="title-and-edit-button" style="display: flex; gap: 1rem; align-items: center;">
                 <h1 id="training-title">{{ page.title }} - Title of the Training</h1>
             </div>
-            <p id="training-description">Short description about the training.</p>
+            <p id="training-description" class="font-weight-normal">Short description about the training.</p>
             <div class="flex-between-center">
-                <a id="edit-icon" class="edit-button print-display-none" href="#edit-title-and-description">Edit title and description</a>
+                <a id="edit-icon" class="edit-button print-display-none">Edit title and description</a>
                 <a id="reset-training" class="edit-button print-display-none" onclick="clearCache()">Reset <i class="fas fa-sync-alt"></i></a>
             </div>
             <ul id="module-list-training" class="training-list">
@@ -493,9 +493,9 @@ permalink: /training/
             <div class="add-modules-breaks">
                 <p style="font-size:45px;"><i class="fas fa-arrow-up"></i></p>
                 <p>Drag and drop more modules to add</p>
-                <a href="#" id="add-module-mobile" class="button">+ Module</a>
-                <a href="#" id="add-timebreak-mobile" class="button">+ Time Slot</a>
-                <a href="#" id="add-daybreak-mobile" class="button">+ Day Break</a>
+                <a  id="add-module-mobile" class="button">+ Module</a>
+                <a  id="add-timebreak-mobile" class="button">+ Time Slot</a>
+                <a  id="add-daybreak-mobile" class="button">+ Day Break</a>
             </div>
         </div>
         <div class="summary print-display-none">
@@ -551,15 +551,15 @@ permalink: /training/
             <h3>Attachments</h3>
             <div class="attachment">
                 <input type="checkbox" id="timetable" name="timetable" value="Timetable" disabled>
-                <label for="timetable"> Timetable <a href="#"><i class="fas fa-info-circle"></i></a></label>
+                <label for="timetable"> Timetable <a ><i class="fas fa-info-circle"></i></a></label>
             </div>
             <div class="attachment">
                 <input type="checkbox" id="materialchecklist" name="materialchecklist" value="materialchecklist" disabled>
-                <label for="materialchecklist"> Material checklist <a href="#"><i class="fas fa-info-circle"></i></a></label>
+                <label for="materialchecklist"> Material checklist <a ><i class="fas fa-info-circle"></i></a></label>
             </div>
             <div class="attachment">
                 <input type="checkbox" id="name-badges" name="name-badges" value="name-badges" disabled>
-                <label for="name-badges"> Name badges <a href="#"><i class="fas fa-info-circle"></i></a></label>
+                <label for="name-badges"> Name badges <a ><i class="fas fa-info-circle"></i></a></label>
             </div>
             <div class="overlay">
                 <p>This feature is coming</p>
