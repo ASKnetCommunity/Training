@@ -3,9 +3,9 @@ layout: module
 module:
     name: 'The Integration of Modules and Resources into #ASKtraining'
     id: 'integration_of_modules_resources'
-    url: 'https://github.com/ASKnetCommunity/Training/wiki/The-Integration-of-Moudules-and-Resources-into-%23ASKtraining'
+    url: 'https://github.com/ASKnetCommunity/Training/wiki/The-Integration-of-Modules-and-Resources-into-%23ASKtraining'
     tag: 'Web & Software'
-    description: "This module guides users through the process of integrating modules and resources on #ASKtraining, providing step-by-step instructions on how to seamlessly incorporate content into the platform."
+    description: "This module serves as a comprehensive guide for users navigating the integration of modules and resources within the #ASKtraining platform. It entails the operation of a GitHub repository and its associated dataset. Through detailed, step-by-step instructions, users are seamlessly guided through the process of incorporating content into the platform, ensuring a smooth integration experience."
     pic-url: asktraining_integration.png
     duration: 15 
     max-participants: 5

@@ -1,6 +1,6 @@
 ---
 resource:
-    name: 'Mental health & trauma'
+    name: 'Mental Health & Trauma - handout'
     id: 'mental_health_trauma'    
     description: "Information about mental health & trauma."
     url: 'https://github.com/opencultureagency/defyhatenow/blob/master/CAMEROON/SocialMedia-FieldGuide/mental%20healt%20trauma.pdf'

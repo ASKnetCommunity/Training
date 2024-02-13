@@ -1,6 +1,6 @@
 ---
 resource:
-    name: 'Safe Digital Spaces'
+    name: 'Safe Digital Spaces - handout'
     id: 'SafeDigitasSpaces'      
     description: "Online awareness with focus on women"
     url: 'https://github.com/opencultureagency/defyhatenow/blob/master/CAMEROON/SocialMedia-FieldGuide/safe%20digital%20spaces.pdf'

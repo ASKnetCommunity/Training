@@ -1,6 +1,6 @@
 ---
 resource:
-    name: 'counter hate speech online'
+    name: 'Counter Hate Speech Online - handout'
     id: 'counter_hate_speech_online'    
     description: "What is hate speech and how to counter it."
     url: 'https://github.com/opencultureagency/defyhatenow/blob/master/CAMEROON/SocialMedia-FieldGuide/counter%20hate%20speech.pdf'

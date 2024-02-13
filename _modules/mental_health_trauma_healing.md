@@ -3,7 +3,7 @@ layout: module
 module:
     name: 'Mental Health, Trauma and Healing'
     id: 'mental_health_trauma_healing'
-    url: 'https://defyhatenow.org/social-media-hate-speech-mitigation-field-guide-v2-cameroon/'
+    url: 'https://defyhatenow.org/wp-content/uploads/2023/10/DHN_cameroon_field_guide_EN_2021_chapter5.pdf'
     tag: 'Community & Moderation, Media & Art'
     description: "Trauma is a persons experience of a situation - and how they think and feel about it afterwards. This modul gives information about trauma, mental health and healing in the context of social media."
     pic-url: mental_health_trauma_healing.png
