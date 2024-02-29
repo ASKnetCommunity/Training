@@ -7,7 +7,7 @@ module:
     tag: 'Open Source & Knowledge, Sustainability, Hardware & Repair'
     description: "Clean drinking water is essential to survival. Identify the dangers of drinking polluted water, and learn how to make a low-cost DIY water filter using recycled / upcycled materials. You will create a valuable resource with life-long benefits to your community!"
     pic-url: diy_water_filter.png
-    duration: 0 # 0    #introduction time in minutes, the resources have their own time blocks
+    duration: 15 #introduction time in minutes, the resources have their own time blocks
     max-participants: 10
     min-trainers: 1
     difficulty: 1   #1-3, 1 is easyest
