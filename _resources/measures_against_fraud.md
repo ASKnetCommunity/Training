@@ -1,6 +1,6 @@
 ---
 resource:
-    name: 'Measures against fraud'
+    name: 'How to identify and use safer digital tools'
     id: 'measures_against_fraud'
     description: "Higlits the identification and use of safe digital tools in naviagation of online and offline spaces"
     url: 'https://github.com/ASKnetCommunity/Antifraud-Bootcamp/blob/main/measures_against_fraud.md'
