@@ -1,11 +1,11 @@
 ---
 layout: module
 module:
-    name: 'Antifraud'
-    id: 'antifraud_oer_training'     
+    name: 'Anti-fraud Basics'
+    id: 'antifraud'     
     url: 'https://github.com/ASKnetCommunity/Antifraud-Bootcamp'    
     tag: 'Data Security & Research, Web & Software'   #comma-separated list, e.g. 'Web' or if more than 1: 'Open Source, Hardware & Repair, Sustainability, Media & Art, Community & Moderation, Data_Security & Research' 
-    description: "Seeks to avail and equip individuals with knowledgeand insight of online and offline fraud"
+    description: "Seeks to avail and equip individuals with knowledge and insight of online and offline fraud"
     pic-url: Types_of_fraud.jpg
     duration: 45
     max-participants: 25

@@ -1,6 +1,6 @@
 ---
 resource:
-    name: 'Stop disinformation'
+    name: 'Stop Disinformation - handout'
     id: 'stop_disinformation'
     description: "What is disinformation / misinformation and how to identify it."
     url: 'https://github.com/opencultureagency/defyhatenow/blob/master/CAMEROON/SocialMedia-FieldGuide/stop%20disinformation.pdf'

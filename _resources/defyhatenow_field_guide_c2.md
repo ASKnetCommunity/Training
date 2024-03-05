@@ -1,6 +1,6 @@
 ---
 resource:
-    name: 'Hate speech online field guide'
+    name: 'Hate speech online field guide - Chapter 2: Social Media Use and Fact Checking '
     id: 'defyhatenow_field_guide_c2'
     description: "Deeper information in the context of hate speech online."
     url: 'https://defyhatenow.org/wp-content/uploads/2022/05/DHN_cameroon_field_guide_EN_2021-chapter2.pdf'

@@ -7,7 +7,7 @@ module:
     tag: 'Community & Moderation, Media & Art'
     description: "What is hate speech and what measures are there to counter it?"
     pic-url: hate_speech_online.png
-    duration: 0 # 30    #introduction time in minutes, the resources have their own time blocks
+    duration: 30    #introduction time in minutes, the resources have their own time blocks
     max-participants: 10
     min-trainers: 1
     difficulty: 1   #1-3, 1 is easyest

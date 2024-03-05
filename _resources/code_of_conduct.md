@@ -1,6 +1,6 @@
 ---
 resource:
-    name: 'Social media code of conduct'
+    name: 'Social Media Code of Conduct - handout'
     id: 'code_of_conduct'
     description: "How to deal with the social media."
     url: 'https://github.com/opencultureagency/defyhatenow/blob/master/CAMEROON/SocialMedia-FieldGuide/social%20media%20code%20of%20conduct.pdf'
