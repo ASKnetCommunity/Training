@@ -1,7 +1,7 @@
 ---
 layout: module
 module:
-    name: 'Open Educational Resources Introduction Webinar'
+    name: 'Introduction to Open Educational Resources'
     id: 'oer-basic-intro'      #can only contain small letters, numbers, minus and underscore. needs to be the same as the file name
     url: 'https://doutorsocrates.gitbook.io/open-education-resources-webinar/day-1/session-1-introduction-to-oers-and-case-studies'     #url that is linked in the table view, can be empty
     tag: 'Open Source & Knowledge, Education'   #comma-separated list, e.g. 'Web' or if more than 1: 'Open Source, Hardware & Repair, Sustainability, Media & Art, Community & Moderation, Data_Security & Research'
