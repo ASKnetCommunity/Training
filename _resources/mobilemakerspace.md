@@ -1,8 +1,8 @@
 ---
 resource:
-    name: 'Mobile Makerspaces Concept'
+    name: 'From Toolbox to Mobile Makerspaces Concept'
     id: 'mobilemakerspace'      #can only contain small letters, numbers, minus and underscore. needs to be the same as the file name
-    description: "Introducing the idea of mobile makerspaces, flexible toolkits for emergency situations and use case specific scenarios."
+    description: "Introducing the idea of mobile makerspaces in the context of #ASKotec, flexible toolkits for emergency situations and use case specific scenarios."
     url: 'https://www.appropedia.org/Tolocar_Playbook/Why_Tolocar/Mobile_Makerspaces'
     duration: 20     #in minutes, 0 min for "tool-kits" with no educational timeframe
     difficulty: 1     #1-3, 1 is easyest

@@ -1,6 +1,6 @@
 ---
 resource:
-    name: "Open Hardware Guide Intro"
+    name: "Open Hardware Guide"
     id: ohg
     url: "https://github.com/opencultureagency/Open-Hardware-Guide"
     duration: 0

@@ -12,5 +12,5 @@ module:
     min-trainers: 1
     difficulty: 2   #1-3, 1 is easyest
     license: '[CC-BY-SA 4.0](https://choosealicense.com/licenses/cc-by-sa-4.0/)'
-    res: 'mobilemakerspace,askotecintro,ohg,askotec-dev,askotec-packing,askotec-design,askotec'       #comma-separated list e.g. 'askotec', or if more than 1: 'askotec, ohg'
+    res: 'askotecintro, askotec-dev, askotec-packing, mobilemakerspace, ohg, askotec-design, askotec'       #comma-separated list e.g. 'askotec', or if more than 1: 'askotec, ohg'
 ---  
