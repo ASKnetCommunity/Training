@@ -12,5 +12,5 @@ module:
     min-trainers: 1
     difficulty: 2   #1-3, 1 is easyest
     license: '[CC-BY-SA 4.0](https://choosealicense.com/licenses/cc-by-sa-4.0/)'
-    res: 'roshop-intro, roshop-concept, roshop-prep, rammed-earth, pagirinya-house-example, roshop-dev'       #comma-separated list e.g. 'askotec', or if more than 1: 'askotec, ohg'
+    res: 'roshop-intro, roshop-intro-presentation, roshop-concept, roshop-prep, rammed-earth, pagirinya-house-example, roshop-dev'       #comma-separated list e.g. 'askotec', or if more than 1: 'askotec, ohg'
 ---  
