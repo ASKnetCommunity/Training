@@ -1,9 +1,9 @@
 ---
 resource:
-    name: '#ASKmod Repair Set'
-    id: 'askmod-repair'      #can only contain small letters, numbers, minus and underscore. needs to be the same as the file name
+    name: '#ASKmod Glue Set'
+    id: 'askmod-glue'      #can only contain small letters, numbers, minus and underscore. needs to be the same as the file name
     description: ""
-    url: 'https://github.com/opencultureagency/ASKmod-Repair-Set'
+    url: 'https://github.com/opencultureagency/ASKmod-Glue-Set'
     duration: 0     #in minutes, 0 min for "tool-kits" with no educational timeframe
     difficulty: 1    #1-3, 1 is easyest
     cost: 0      #in $ (dont leave empty, but type 0 instead)
