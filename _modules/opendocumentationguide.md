@@ -1,7 +1,7 @@
 ---
 layout: module
 module:
-    name: 'Open Dokumentation Guide'
+    name: 'Open Documentation Guide'
     id: 'opendocumentationguide'      #can only contain small letters, numbers, minus and underscore. needs to be the same as the file name
     url: 'https://github.com/opencultureagency/Open-Documentation-Guide'     #url that is linked in the table view, can be empty
     tag: 'Open Source & Knowledge'  #comma-separated list, e.g. 'Web' or if more than 1: 'Open Source, Hardware & Repair, Sustainability, Media & Art, Community & Moderation, Data_Security & Research'

@@ -1,6 +1,6 @@
 ---
 resource:
-    name: 'Introduction to Choose a License: Navigating License Selection for Your Projects'      #can only contain small letters, numbers, minus and underscore. needs to be the same as the file name
+    name: 'How To Choose a License: Navigating License Selection for Your Projects'      #can only contain small letters, numbers, minus and underscore. needs to be the same as the file name
     description: ""
     url: 'https://doutorsocrates.gitbook.io/open-education-resources-webinar/day-2/session-3-the-importance-of-open-licensing-for-oers-and-choosing-the-right-license/introduction-to-choose-a-license-navigating-license-selection-for-your-projects'
     duration: 20     #in minutes, 0 min for "tool-kits" with no educational timeframe
