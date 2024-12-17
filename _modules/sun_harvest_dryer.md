@@ -12,5 +12,5 @@ module:
     min-trainers: 1
     difficulty: 1   #1-3, 1 is easyest
     license: '[CC-BY-SA 4.0](https://choosealicense.com/licenses/cc-by-sa-4.0/)'
-    res: 'advantages_sunHarvest_dryer, tools_materials_shd, step_by_step_sunharvestdryer, slides_sunHarvest_dryer'       #comma-separated list e.g. 'askotec', or if more than 1: 'askotec, ohg'
+    res: 'video_sunHarvest_dryer, advantages_sunHarvest_dryer, tools_materials_shd, step_by_step_sunharvestdryer, slides_sunHarvest_dryer'       #comma-separated list e.g. 'askotec', or if more than 1: 'askotec, ohg'
 ---  
