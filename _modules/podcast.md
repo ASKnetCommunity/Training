@@ -12,5 +12,5 @@ module:
     min-trainers: 1
     difficulty: 2   #1-3, 1 is easyest
     license: '[CC-BY-SA 4.0](https://choosealicense.com/licenses/cc-by-sa-4.0/)'
-    res: 'introduction_podcast, podcast_tools_materials, podcast_engaging_content, podcast_case_study'
+    res: 'introduction_podcast, podcast_tools_materials, podcast_engaging_content, podcast_case_study, podcast_ryp_episodes'
 ---  
