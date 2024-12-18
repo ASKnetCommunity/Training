@@ -8,5 +8,5 @@ resource:
     difficulty: 1
     cost: 0
     license: CC BY-SA 4.0
-    author: '[Amoko Joseph](https://github.com/amoko-jose), [Vuga William](https://lead.asknet.community/profiles/Vuga-William/), [Youth Empowerment Foundation](https://yef-uganda.org/), [Bastian Walthierer](https://www.linkedin.com/in/bastian-walthierer-0416b5112/)'
+    author: '[Amoko Joseph](https://github.com/amoko-jose), [Vuga William](https://lead.asknet.community/profiles/Vuga-William/), [Youth Empowerment Foundation](https://yef-uganda.org/)'
 ---
