@@ -3,7 +3,7 @@ layout: module
 module:
     name: 'The Open Training Guide'
     id: 'opentrainingguide'
-    url: ''     #url that is linked in the overview of a module (manual, educational instructions for the overall module etc.), can be empty
+    url: 'https://github.com/opencultureagency/Open-Training-Guide'     #url that is linked in the overview of a module (manual, educational instructions for the overall module etc.), can be empty
     tag: ''     #comma-separated list, e.g. 'Web' or if more than 1: 'Open Source & Knowledge, Hardware & Repair, Sustainability & Environment, Media & Art, Community & Moderation, Data_Security & Research'
     description: "he #OTG is a versatile toolkit designed to help anyone facilitate, design, and run their own training programs using available local resources. Developed within the #ASKnet ToT program in Uganda, it empowers communities to strengthen media literacy, IT skills, and open information sharing through collaborative P2P methods."
     pic-url: opentrainingguide.jpg
