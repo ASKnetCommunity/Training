@@ -3,7 +3,7 @@ layout: module
 module:
     name: 'The Open Hardware Guide'
     id: 'openhardwareguide'
-    url: 'https://github.com/opencultureagency/Open-Hardware-Guide/tree/master' 
+    url: 'https://github.com/opencultureagency/Open-Hardware-Guide' 
     tag: 'Open Source & Knowledge, Hardware & Repair'     #comma-separated list, e.g. 'Web' or if more than 1: 'Open Source & Knowledge, Hardware & Repair, Sustainability & Environment, Media & Art, Community & Moderation, Data_Security & Research'
     description: "As a practical companion to the Open Learning Guide, the #OHG introduces hands-on projects and methodologies for exploring open technologies. Developed through community workshops, this guide works alongside the #ASKotec emergency kit to empower trainers and tinkerers in building, repairing, and mastering electronics and solar power."
     pic-url: openhardwareguide.jpg
